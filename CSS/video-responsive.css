@@ -1,0 +1,69 @@
+/* 响应式视频播放器样式 */
+
+/* 默认状态：大屏幕(1200px及以上)显示iframe，隐藏video */
+.video-carousel__media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.video-carousel__iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.video-carousel__video {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 小屏幕(1199px及以下)：隐藏iframe，显示video */
+@media (max-width: 1199px) {
+    .video-carousel__iframe {
+        display: none;
+    }
+    
+    .video-carousel__video {
+        display: block;
+    }
+}
+
+/* 强制使用video标签的样式 - 在所有分辨率下都显示video，隐藏iframe */
+.video-carousel__item.force-use-video .video-carousel__iframe {
+    display: none !important;
+}
+
+.video-carousel__item.force-use-video .video-carousel__video {
+    display: block !important;
+}
+
+/* 针对不同分辨率的video样式优化 */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .video-carousel__video {
+        width: 700px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .video-carousel__video {
+        width: 100%;
+        height: 365px;
+    }
+}
+
+@media (max-width: 767px) and (min-width: 576px) {
+    .video-carousel__video {
+        width: 100%;
+        height: 250px;
+    }
+}
+
+@media (max-width: 575px) {
+    .video-carousel__video {
+        width: 100%;
+    }
+}
