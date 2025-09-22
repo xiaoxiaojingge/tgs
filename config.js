@@ -86,7 +86,7 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
         },
         // 背景媒体配置
         background: { // 视频区域背景媒体配置
-            url: "https://www.yysls.cn/pc/gw/20220815175950/img/mhys/bz/17_33f9186.jpg?image_process=format,jpg", // 背景媒体文件URL地址
+            url: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1757106279712_qdqqd_lf6cky.mp4", // 背景媒体文件URL地址
             type: "auto", // 媒体类型检测方式（auto自动检测/video视频/image图片）
             fallback: "https://www.yysls.cn/pc/gw/20220815175950/img/mhys/bz/17_33f9186.jpg?image_process=format,jpg" // 备用图片地址（当主媒体加载失败时使用）
         },

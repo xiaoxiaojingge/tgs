@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,259 +21,366 @@
     <link rel="stylesheet" href="./CSS/resolution-max-2560.css">
 </head>
 <body>
-    <!-- 背景音乐播放器 -->
-    <!--<div class="audio-player">
-        <audio id="backgroundAudio" class="audio-player__element">
-            <source id="backgroundAudioSource" src="" type="audio/mpeg">
-            您的浏览器不支持音频元素。
-        </audio>
-        <div class="audio-player__controls">
-            <div class="audio-player__toggle-btn" id="audioToggleBtn">
-                <span class="audio-player__play-icon">▶</span>
-            </div>
-            <div class="audio-player__volume">
-                <span class="audio-player__volume-icon">🔊</span>
-                <input type="range" min="0" max="1" step="0.05" value="0.3" id="audioVolumeSlider" class="audio-player__volume-slider">
-            </div>
+<!-- 背景音乐播放器 -->
+<!--<div class="audio-player">
+    <audio id="backgroundAudio" class="audio-player__element">
+        <source id="backgroundAudioSource" src="" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    <div class="audio-player__controls">
+        <div class="audio-player__toggle-btn" id="audioToggleBtn">
+            <span class="audio-player__play-icon">▶</span>
         </div>
-    </div>-->
-
-    <!-- 导航栏 -->
-    <nav id="mainNavigation" class="main-nav">
-        <div class="main-nav__container">
-            <div class="main-nav__brand">
-                <img id="navigationLogo" src="" alt="logo2" />
-                <h2 id="navigationTitle"></h2>
-            </div>
-            <ul class="main-nav__menu">
-                <li><a href="#heroSection" class="main-nav__link">首页</a></li>
-                <li><a href="#videoShowcase" class="main-nav__link">百业混剪</a></li>
-                <li><a href="#organizationActivities" class="main-nav__link">百业活动</a></li>
-                <li><a href="#characterGallery" class="main-nav__link">百业人员</a></li>
-                <li><a href="#contactSection" class="main-nav__link">加入我们</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- 首页区域 -->
-    <section id="heroSection" class="hero-section hero-section--main-bg">
-        <div class="hero-section__content">
-            <img id="heroSectionLogo" src="" alt="logo2" class="hero-section__logo" />
-            <h1 id="heroSectionTitle" class="hero-section__title"></h1>
-            <p id="heroSectionSubtitle" class="hero-section__subtitle"></p>
-            <div class="hero-section__actions">
-                <button class="btn btn--secondary" onclick="scrollToSection('videoShowcase')">
-                    查看百业混剪
-                </button>
-                <button class="btn btn--primary" onclick="scrollToSection('organizationActivities')">
-                    探索百业活动
-                </button>
-                <button class="btn btn--secondary" onclick="scrollToSection('characterGallery')">
-                    结识百业人员
-                </button>
-            </div>
-        </div>
-        <div class="hero-section__overlay"></div>
-    </section>
-
-    <!-- 百业混剪区域标题 -->
-    <div id="videoShowcaseHeader" class="section-spacer">
-        <div class="section-header">
-            <h2 id="videoShowcaseTitle" class="section-header__title">百业混剪</h2>
-            <p id="videoShowcaseSubtitle" class="section-header__subtitle">生而微末者，侠为其声</p>
+        <div class="audio-player__volume">
+            <span class="audio-player__volume-icon">🔊</span>
+            <input type="range" min="0" max="1" step="0.05" value="0.3" id="audioVolumeSlider" class="audio-player__volume-slider">
         </div>
     </div>
+</div>-->
 
-    <!-- 百业混剪区域 -->
-    <section id="videoShowcase" class="media-section media-section--video-bg">
-        <!-- 背景媒体将通过 JavaScript 动态创建 -->
-        <div class="media-section__overlay"></div>
-            <div class="video-carousel">
-                <button class="video-carousel__btn video-carousel__btn--prev" onclick="prevDemoVideo()">
-                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png" alt="左箭头" style="width:70px;">
-                </button>
-                <div class="video-carousel__container">
-                    <div class="video-carousel__media">
-                        <div id="videoSectionText" class="video-section__text">
-                            <img id="videoSectionLogo" src="" alt="logo2" class="video-section__logo" />
-                            <h1 id="videoSectionTitle" class="video-section__title">云间来客</h1>
-                            <p id="videoSectionSubtitle" class="video-section__subtitle">风华绝代，无缺人生，百业路远，精彩纷呈</p>
-                        </div>
-                        <div id="videoSectionVideo" class="video-section__video">
-                                <!-- 大屏幕(1200px及以上)显示的iframe -->
-                            <iframe class="video-carousel__iframe" frameborder="0" scrolling="no"
-                                src=""
-                                referrerpolicy="unsafe-url" allowfullscreen
-                                loading="lazy" sandbox="allow-scripts allow-same-origin allow-presentation">
-                            </iframe>
-                            <!-- 小屏幕(1199px及以下)显示的video -->
-                            <video class="video-carousel__video" controls poster="">
-                                <source src="" type="video/mp4">
-                                您的浏览器不支持视频播放。
-                            </video>
-                        </div>
-                    </div>
-                    <div class="video-btn-phone">
-                        <button class="video-carousel__btn video-carousel__btn--prev2" onclick="prevDemoVideo()">
-                            <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png" alt="左箭头" style="width:70px;">
-                        </button>
-                        <button class="video-carousel__btn video-carousel__btn--next2" onclick="nextDemoVideo()">
-                            <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png" alt="右箭头" style="width:70px;">
-                        </button>
-                    </div>
-                </div>
-                <button class="video-carousel__btn video-carousel__btn--next" onclick="nextDemoVideo()">
-                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png" alt="右箭头" style="width:70px;">
-                </button>
-            </div>
-    </section>
-
-    <!-- 百业活动区域标题 -->
-    <div id="organizationActivitiesHeader" class="section-spacer">
-        <div class="section-header">
-            <h2 id="organizationActivitiesTitle" class="section-header__title">百业活动</h2>
-            <p id="organizationActivitiesSubtitle" class="section-header__subtitle">各行各业，精彩纷呈</p>
+<!-- 导航栏 -->
+<nav id="mainNavigation" class="main-nav">
+    <div class="main-nav__container">
+        <div class="main-nav__brand">
+            <img id="navigationLogo" src="" alt="logo2"/>
+            <h2 id="navigationTitle"></h2>
         </div>
+        <ul class="main-nav__menu">
+            <li><a href="#heroSection" class="main-nav__link">首页</a></li>
+            <li><a href="#videoShowcase" class="main-nav__link">百业混剪</a></li>
+            <li><a href="#organizationActivities" class="main-nav__link">百业活动</a></li>
+            <li><a href="#weeklyReport" class="main-nav__link">百业周报</a></li>
+            <li><a href="#characterGallery" class="main-nav__link">百业人员</a></li>
+            <li><a href="#contactSection" class="main-nav__link">加入我们</a></li>
+        </ul>
     </div>
+</nav>
 
-    <!-- 百业活动区域 -->
-    <section id="organizationActivities" class="media-section media-section--organization-bg">
-        <!-- 背景媒体将通过 JavaScript 动态创建 -->
-        <div class="media-section__overlay"></div>
-        <div class="organization-carousel">
-            <button class="organization-carousel__btn organization-carousel__btn--prev" onclick="prevOrgCard()">
-                <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png" alt="左箭头" style="width:70px;">
+<!-- 首页区域 -->
+<section id="heroSection" class="hero-section hero-section--main-bg">
+    <div class="hero-section__content">
+        <img id="heroSectionLogo" src="" alt="logo2" class="hero-section__logo"/>
+        <h1 id="heroSectionTitle" class="hero-section__title"></h1>
+        <p id="heroSectionSubtitle" class="hero-section__subtitle"></p>
+        <div class="hero-section__actions">
+            <button class="btn btn--secondary" onclick="scrollToSection('videoShowcase')">
+                查看百业混剪
             </button>
-            <div class="organization-carousel__container">
-                <div class="organization-activity-card" data-index="0">
-                    <div class="organization-carousel__image">
-                        <img src="https://www.yysls.cn/pc/gw/20220815175950/img/mhys/bz/17_33f9186.jpg?image_process=format,jpg" alt="互帮互助五人本">
-                    </div>
-                    <div class="organization-carousel__content">
-                        <h3>互帮互助五人本</h3>
-                        <p>百业成员互帮互助，齐心协力，共同拿下五人本！</p>
-                        <div class="organization-carousel__stats">
-                            <span>主持：任何百业成员</span>
-                            <span>时间：任何时间</span>
-                            <span>地点：任何地点</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="organization-btn-phone">
-                    <button class="organization-carousel__btn organization-carousel__btn--prev2" onclick="prevOrgCard()">
-                        <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png" alt="左箭头" style="width:70px;">
-                    </button>
-                    <button class="organization-carousel__btn organization-carousel__btn--next2" onclick="nextOrgCard()">
-                        <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png" alt="右箭头" style="width:70px;">
-                    </button>
-                </div>
-            </div>
-            <button class="organization-carousel__btn organization-carousel__btn--next" onclick="nextOrgCard()">
-                <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png" alt="右箭头" style="width:70px;">
+            <button class="btn btn--primary" onclick="scrollToSection('organizationActivities')">
+                探索百业活动
+            </button>
+            <button class="btn btn--secondary" onclick="scrollToSection('weeklyReport')">
+                阅读百业周报
+            </button>
+            <button class="btn btn--secondary" onclick="scrollToSection('characterGallery')">
+                结识百业人员
             </button>
         </div>
-    </section>
-
-    <!-- 百业人员区域标题 -->
-    <div id="characterGalleryHeader" class="section-spacer">
-        <div class="section-header">
-            <h2 id="characterGalleryTitle" class="section-header__title">百业人员</h2>
-            <p id="characterGallerySubtitle" class="section-header__subtitle">精英人才，各展风采</p>
-        </div>
     </div>
+    <div class="hero-section__overlay"></div>
+</section>
 
-    <!-- 百业人员区域 -->
-    <section id="characterGallery" class="media-section media-section--character-bg">
-        <div class="character-showcase">
-            <div class="character-showcase__sidebar" >
-                 <div class="character-showcase__active" id="characterSidebarList">
-                    <!-- 角色列表将通过JavaScript动态生成 -->
-                 </div>
-                <div class="character-showcase__pagination">
-                    <button class="character-showcase__page-btn character-showcase__page-btn--prev" onclick="prevPage()">
-                        <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png" alt="左箭头" style="width:30px;">
-                    </button>
-                    <div class="character-showcase__page-indicators" id="characterPageIndicators">
-                        <!-- 页码指示器将通过JavaScript动态生成 -->
-                    </div>
-                    <button class="character-showcase__page-btn character-showcase__page-btn--next" onclick="nextPage()">
-                        <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png" alt="右箭头" style="width:30px;">
-                    </button>
+<!-- 百业混剪区域标题 -->
+<div id="videoShowcaseHeader" class="section-spacer">
+    <div class="section-header">
+        <h2 id="videoShowcaseTitle" class="section-header__title">百业混剪</h2>
+        <p id="videoShowcaseSubtitle" class="section-header__subtitle">生而微末者，侠为其声</p>
+    </div>
+</div>
+
+<!-- 百业混剪区域 -->
+<section id="videoShowcase" class="media-section media-section--video-bg">
+    <!-- 背景媒体将通过 JavaScript 动态创建 -->
+    <div class="media-section__overlay"></div>
+    <div class="video-carousel">
+        <button class="video-carousel__btn video-carousel__btn--prev" onclick="prevDemoVideo()">
+            <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png"
+                 alt="左箭头" style="width:70px;">
+        </button>
+        <div class="video-carousel__container">
+            <div class="video-carousel__media">
+                <div id="videoSectionText" class="video-section__text">
+                    <img id="videoSectionLogo" src="" alt="logo2" class="video-section__logo"/>
+                    <h1 id="videoSectionTitle" class="video-section__title">云间来客</h1>
+                    <p id="videoSectionSubtitle" class="video-section__subtitle">风华绝代，无缺人生，百业路远，精彩纷呈</p>
+                </div>
+                <div id="videoSectionVideo" class="video-section__video">
+                    <!-- 大屏幕(1200px及以上)显示的iframe -->
+                    <iframe class="video-carousel__iframe" frameborder="0" scrolling="no"
+                            src=""
+                            referrerpolicy="unsafe-url" allowfullscreen
+                            loading="lazy" sandbox="allow-scripts allow-same-origin allow-presentation">
+                    </iframe>
+                    <!-- 小屏幕(1199px及以下)显示的video -->
+                    <video class="video-carousel__video" controls poster="">
+                        <source src="" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
                 </div>
             </div>
-            <div class="character-showcase__main">
-                <div id="characterInfoPanel" class="character-showcase__info">
-                    <h1 id="characterDisplayName" class="character-showcase__name">峰伈</h1>
-                    <p id="characterDisplayTitle" class="character-showcase__role">社长</p>
-                    <div id="characterDisplayTags" class="character-showcase__tags">
-                        <span class="character-showcase__tag">虹虹玩家</span>
-                        <span class="character-showcase__tag">紫色韵味</span>
-                        <span class="character-showcase__tag">开服玩家</span>
-                    </div>
-                    <p id="characterDisplayDescription" class="character-showcase__description">为人仁厚，重情重义。</p>
+            <div class="video-btn-phone">
+                <button class="video-carousel__btn video-carousel__btn--prev2" onclick="prevDemoVideo()">
+                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png"
+                         alt="左箭头" style="width:70px;">
+                </button>
+                <button class="video-carousel__btn video-carousel__btn--next2" onclick="nextDemoVideo()">
+                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png"
+                         alt="右箭头" style="width:70px;">
+                </button>
+            </div>
+        </div>
+        <button class="video-carousel__btn video-carousel__btn--next" onclick="nextDemoVideo()">
+            <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png"
+                 alt="右箭头" style="width:70px;">
+        </button>
+    </div>
+</section>
+
+<!-- 百业活动区域标题 -->
+<div id="organizationActivitiesHeader" class="section-spacer">
+    <div class="section-header">
+        <h2 id="organizationActivitiesTitle" class="section-header__title">百业活动</h2>
+        <p id="organizationActivitiesSubtitle" class="section-header__subtitle">各行各业，精彩纷呈</p>
+    </div>
+</div>
+
+<!-- 百业活动区域 -->
+<section id="organizationActivities" class="media-section media-section--organization-bg">
+    <!-- 背景媒体将通过 JavaScript 动态创建 -->
+    <div class="media-section__overlay"></div>
+    <div class="organization-carousel">
+        <button class="organization-carousel__btn organization-carousel__btn--prev" onclick="prevOrgCard()">
+            <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png"
+                 alt="左箭头" style="width:70px;">
+        </button>
+        <div class="organization-carousel__container">
+            <div class="organization-activity-card" data-index="0">
+                <div class="organization-carousel__image">
+                    <img src="https://www.yysls.cn/pc/gw/20220815175950/img/mhys/bz/17_33f9186.jpg?image_process=format,jpg"
+                         alt="互帮互助五人本">
                 </div>
-                <div class="character-showcase__artwork">
-                    <div id="characterArtworkContainer" class="character-showcase__artwork-container" onclick="nextCharacterArt()">
-                        <div class="character-showcase__artwork-faces">
-                            <div class="character-showcase__artwork-face character-showcase__artwork-face--front">
-                                <img id="characterArtworkImage" src="https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1757398092558_qdqqd_fqwyyr.avif" alt="峰伈">
-                            </div>
+                <div class="organization-carousel__content">
+                    <h3>互帮互助五人本</h3>
+                    <p>百业成员互帮互助，齐心协力，共同拿下五人本！</p>
+                    <div class="organization-carousel__stats">
+                        <span>主持：任何百业成员</span>
+                        <span>时间：任何时间</span>
+                        <span>地点：任何地点</span>
+                    </div>
+                </div>
+            </div>
+            <div class="organization-btn-phone">
+                <button class="organization-carousel__btn organization-carousel__btn--prev2" onclick="prevOrgCard()">
+                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png"
+                         alt="左箭头" style="width:70px;">
+                </button>
+                <button class="organization-carousel__btn organization-carousel__btn--next2" onclick="nextOrgCard()">
+                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png"
+                         alt="右箭头" style="width:70px;">
+                </button>
+            </div>
+        </div>
+        <button class="organization-carousel__btn organization-carousel__btn--next" onclick="nextOrgCard()">
+            <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png"
+                 alt="右箭头" style="width:70px;">
+        </button>
+    </div>
+</section>
+
+<!-- 百业周报区域标题 -->
+<div id="weeklyReportHeaderTitle" class="section-spacer">
+    <div class="section-header">
+        <h2 id="weeklyReportTitle" class="section-header__title">百业周报</h2>
+        <p id="weeklyReportSubtitle" class="section-header__subtitle">江湖风云，一览无余</p>
+    </div>
+</div>
+
+<!-- 百业周报区域 -->
+<section id="weeklyReport" class="weekly-report-section">
+    <div class="weekly-report-container">
+        <!-- 开封高级会所 -->
+        <div class="weekly-report-header" id="weeklyReportHeader">
+            <!-- 周报头部信息将通过JavaScript动态生成 -->
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="weekly-report-content">
+            <!-- 左侧列：活跃分子 -->
+            <div class="weekly-report-left-column">
+                <div class="active-members-section">
+                    <h4 class="section-title">好厉害的活跃分子</h4>
+                    <div class="members-ranking" id="activeMembersRanking">
+                        <!-- 活跃成员排行榜将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间列：恋与首领 TOP5 -->
+            <div class="weekly-report-center-column">
+                <div class="love-music-section">
+                    <h4 class="section-title">恋与首领 · TOP5</h4>
+                    <div class="love-music-leaders" id="loveMusicLeaders">
+                        <!-- 两个首领的TOP5记录将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧列：百业侠境MVP榜 -->
+            <div class="weekly-report-right-column">
+                <div class="mvp-section">
+                    <h4 class="section-title">百业侠境MVP榜</h4>
+                    <div class="mvp-leaders" id="mvpLeaders">
+                        <!-- 两个Boss的MVP记录将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 下方内容区域 -->
+        <div class="weekly-report-bottom">
+            <!-- 上周纂要 -->
+            <div class="weekly-summary" id="weeklySummary">
+                <!-- 上周纂要内容将通过JavaScript动态生成 -->
+            </div>
+
+            <!-- 百业战·百业栋梁 -->
+            <div class="battle-section">
+                <h4 class="section-title">百业战 · 百业栋梁</h4>
+                <div class="battle-records" id="battleRecords">
+                    <!-- 战绩记录将通过JavaScript动态生成 -->
+                </div>
+                <div class="battle-members" id="battleMembers">
+                    <!-- 战斗成员头像将通过JavaScript动态生成 -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="weekly-report-footer" id="weeklyReportFooter">
+            <!-- 底部统计信息将通过JavaScript动态生成 -->
+        </div>
+
+        <!-- 来人，来！ -->
+        <div class="recruitment-section">
+            <h4 class="section-title">来人，来！</h4>
+            <div class="recruitment-content">
+                <div class="recruitment-highlight">热烈欢迎新加入成员</div>
+                <div class="new-members-grid" id="newMembersGrid">
+                    <!-- 新成员头像网格将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 百业人员区域标题 -->
+<div id="characterGalleryHeader" class="section-spacer">
+    <div class="section-header">
+        <h2 id="characterGalleryTitle" class="section-header__title">百业人员</h2>
+        <p id="characterGallerySubtitle" class="section-header__subtitle">精英人才，各展风采</p>
+    </div>
+</div>
+
+<!-- 百业人员区域 -->
+<section id="characterGallery" class="media-section media-section--character-bg">
+    <div class="character-showcase">
+        <div class="character-showcase__sidebar">
+            <div class="character-showcase__active" id="characterSidebarList">
+                <!-- 角色列表将通过JavaScript动态生成 -->
+            </div>
+            <div class="character-showcase__pagination">
+                <button class="character-showcase__page-btn character-showcase__page-btn--prev" onclick="prevPage()">
+                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_prev_d3634779.png?image_process=format,png"
+                         alt="左箭头" style="width:30px;">
+                </button>
+                <div class="character-showcase__page-indicators" id="characterPageIndicators">
+                    <!-- 页码指示器将通过JavaScript动态生成 -->
+                </div>
+                <button class="character-showcase__page-btn character-showcase__page-btn--next" onclick="nextPage()">
+                    <img src="https://www.yysls.cn/pc/fab/20250723194326/img/feature_next_6f404b40.png?image_process=format,png"
+                         alt="右箭头" style="width:30px;">
+                </button>
+            </div>
+        </div>
+        <div class="character-showcase__main">
+            <div id="characterInfoPanel" class="character-showcase__info">
+                <h1 id="characterDisplayName" class="character-showcase__name">峰伈</h1>
+                <p id="characterDisplayTitle" class="character-showcase__role">社长</p>
+                <div id="characterDisplayTags" class="character-showcase__tags">
+                    <span class="character-showcase__tag">虹虹玩家</span>
+                    <span class="character-showcase__tag">紫色韵味</span>
+                    <span class="character-showcase__tag">开服玩家</span>
+                </div>
+                <p id="characterDisplayDescription" class="character-showcase__description">为人仁厚，重情重义。</p>
+            </div>
+            <div class="character-showcase__artwork">
+                <div id="characterArtworkContainer" class="character-showcase__artwork-container"
+                     onclick="nextCharacterArt()">
+                    <div class="character-showcase__artwork-faces">
+                        <div class="character-showcase__artwork-face character-showcase__artwork-face--front">
+                            <img id="characterArtworkImage"
+                                 src="https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1757398092558_qdqqd_fqwyyr.avif"
+                                 alt="峰伈">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- 关于我们区域 -->
-    <section id="aboutSection" class="content-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 id="aboutSectionTitle" class="section-header__title">加入我们</h2>
-                <p id="aboutSectionSubtitle1" class="section-header__subtitle">燕云十六声百业搜索</p>
-                <p id="aboutSectionSubtitle2" class="section-header__subtitle"><span style="color: #ff4757; font-weight: bold">云间来客</span></p>
+<!-- 关于我们区域 -->
+<section id="aboutSection" class="content-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 id="aboutSectionTitle" class="section-header__title">加入我们</h2>
+            <p id="aboutSectionSubtitle1" class="section-header__subtitle">燕云十六声百业搜索</p>
+            <p id="aboutSectionSubtitle2" class="section-header__subtitle"><span
+                    style="color: #ff4757; font-weight: bold">云间来客</span></p>
+        </div>
+        <div class="about-section__content">
+            <div class="about-section__text about-section__text--primary">
+                <p>云间来客致力于展示各流派咸鱼人生的风采。</p>
+                <p>我们相信，每个人都有自己的独特价值。</p>
             </div>
-            <div class="about-section__content">
-                <div class="about-section__text about-section__text--primary">
-                    <p>云间来客致力于展示各流派咸鱼人生的风采。</p>
-                    <p>我们相信，每个人都有自己的独特价值。</p>
-                </div>
-                <div class="about-section__text about-section__text--secondary">
-                    <p>云间来客致力于展示各流派咸鱼人生的风采。</p>
-                    <p>我们相信，每个人都有自己的独特价值。</p>
+            <div class="about-section__text about-section__text--secondary">
+                <p>云间来客致力于展示各流派咸鱼人生的风采。</p>
+                <p>我们相信，每个人都有自己的独特价值。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer id="contactSection" class="site-footer">
+    <div class="container">
+        <div class="site-footer__content">
+            <div class="site-footer__section">
+                <h4>云间来客</h4>
+                <p>展示各流派咸鱼人才，弘扬咸鱼精神</p>
+            </div>
+            <div class="site-footer__section">
+                <h4></h4>
+                <p></p>
+            </div>
+            <div class="site-footer__section">
+                <h4>关注我们</h4>
+                <div class="site-footer__social">
+                    <a class="site-footer__social-link"></a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer id="contactSection" class="site-footer">
-        <div class="container">
-            <div class="site-footer__content">
-                <div class="site-footer__section">
-                    <h4>云间来客</h4>
-                    <p>展示各流派咸鱼人才，弘扬咸鱼精神</p>
-                </div>
-                <div class="site-footer__section">
-                    <h4></h4>
-                    <p></p>
-                </div>
-                <div class="site-footer__section">
-                    <h4>关注我们</h4>
-                    <div class="site-footer__social">
-                        <a class="site-footer__social-link"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="site-footer__bottom">
-                <p>&copy; 2025 云间来客. 保留所有权利.</p>
-            </div>
+        <div class="site-footer__bottom">
+            <p>&copy; 2025 云间来客. 保留所有权利.</p>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="config.js"></script>
-    <script src="data.js"></script>
-    <script src="imageUtils.js"></script>
-    <script src="script.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="imageUtils.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
+
