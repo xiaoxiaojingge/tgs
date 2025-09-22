@@ -159,12 +159,12 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
                     textShadow: "0 0 5px #000, 0 0 10px #000, 0 0 15px #000" // 角色姓名文字阴影效果
                 },
                 title: { // 角色职位样式配置
-                    fontSize: "2.5rem", // 角色职位字体大小
+                    fontSize: "4rem", // 角色职位字体大小
                     color: "#E2E8F0", // 角色职位文字颜色，修改颜色的话具体看gitee常用命令上方的基础颜色
                     textAlign: "left" // 角色职位文字对齐方式
                 },
                 description: { // 角色描述样式配置
-                    fontSize: "1.8rem", // 角色描述字体大小
+                    fontSize: "2.5rem", // 角色描述字体大小
                     color: "#CBD5E0", // 角色描述文字颜色，修改颜色的话具体看gitee常用命令上方的基础颜色
                     textAlign: "left" // 角色描述文字对齐方式
                 }

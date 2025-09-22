@@ -187,12 +187,12 @@
     }
 
     .character-showcase__pagination {
-        position: fixed;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        z-index: 100;
-        flex-direction: column;
+        width: 50%;
+        height: 2%;
+        position: relative;
+        flex-direction: row;
+        right: 0;
+        top: -130px;
         gap: 12px;
     }
 

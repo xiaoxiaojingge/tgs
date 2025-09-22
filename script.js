@@ -400,7 +400,7 @@ class MusicPlayer {
         this.volumeInput = document.getElementById('audioVolumeSlider');
         this.isPlaying = false;
         this.volume = 0.3;
-        this.init();
+        // this.init();
     }
 
     init() {
@@ -561,34 +561,6 @@ function handleNavbarScroll() {
     }
 }
 
-// 处理分页组件可见性
-function handlePaginationVisibility() {
-    const characterGallery = document.getElementById('characterGallery');
-    const pagination = document.querySelector('.character-showcase__pagination');
-    
-    if (!characterGallery || !pagination) return;
-    
-    // 检查是否在角色管理模式
-    if (isCharacterManagementMode) {
-        pagination.style.display = 'none';
-        return;
-    }
-    
-    // 获取百业人员区域的位置信息
-    const rect = characterGallery.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    // 判断百业人员区域是否在视口内
-    const isVisible = rect.top < windowHeight && rect.bottom > 0;
-    
-    if (isVisible) {
-        pagination.style.display = 'flex';
-        pagination.style.opacity = '1';
-    } else {
-        pagination.style.display = 'none';
-        pagination.style.opacity = '0';
-    }
-}
 
 // 平滑滚动到指定区域
 function scrollToSection(sectionId) {
@@ -1179,7 +1151,6 @@ function initializeApp() {
 
     // 绑定滚动事件
     window.addEventListener('scroll', handleNavbarScroll);
-    window.addEventListener('scroll', handlePaginationVisibility);
 
     // 初始化轮播并设置视频源
     updateDemoVideoCarousel();
@@ -1277,10 +1248,6 @@ function initializeApp() {
     // 添加百业人员标题三击事件监听器
     initCharacterManagement();
 
-    // 初始化分页组件可见性
-    setTimeout(() => {
-        handlePaginationVisibility();
-    }, 100);
 }
 
 // 页面加载完成后初始化
@@ -1330,7 +1297,10 @@ function enterCharacterManagement() {
     createCharacterManagementPage();
 
     // 隐藏分页组件
-    handlePaginationVisibility();
+    const pagination = document.querySelector('.character-showcase__pagination');
+    if (pagination) {
+        pagination.style.display = 'none';
+    }
 
     console.log('进入角色管理模式');
 }
@@ -1351,7 +1321,10 @@ function exitCharacterManagement() {
     updateCharacterDisplay();
 
     // 恢复分页组件显示
-    handlePaginationVisibility();
+    const pagination = document.querySelector('.character-showcase__pagination');
+    if (pagination) {
+        pagination.style.display = 'flex';
+    }
 
     console.log('退出角色管理模式，数据已同步');
 }
@@ -1375,6 +1348,7 @@ function createCharacterManagementPage() {
                 <h2>百业人员管理</h2>
                 <div class="character-management-actions">
                     <button class="btn btn--add" onclick="addNewCharacter()">添加角色</button>
+                    <button class="btn btn--primary" onclick="exportCharacterData()">导出数据</button>
                     <button class="btn btn--secondary" onclick="exitCharacterManagement()">返回展示</button>
                 </div>
             </div>
@@ -1490,7 +1464,7 @@ function renderCharacterManagementList(searchTerm = '') {
 
     // 获取当前角色数据
     const characters = getCharacterDataFromStorage();
-    
+
     // 更新人员数量显示
     const characterCount = document.getElementById('characterCount');
     if (characterCount) {
@@ -1502,7 +1476,7 @@ function renderCharacterManagementList(searchTerm = '') {
         if (!searchTerm) return true;
         const searchLower = searchTerm.toLowerCase();
         const nameMatch = character.name.toLowerCase().includes(searchLower);
-        const gameIdMatch = character.gameId && character.gameId.toLowerCase().includes(searchLower);
+        const gameIdMatch = character.id && character.id.toLowerCase().includes(searchLower);
         return nameMatch || gameIdMatch;
     });
 
@@ -1521,7 +1495,7 @@ function renderCharacterManagementList(searchTerm = '') {
                 <div class="character-details">
                     <h4>${character.name}</h4>
                     ${character.title ? `<div class="character-badge character-badge--title">${character.title}</div>` : ''}
-                    ${character.gameId ? `<div class="character-badge character-badge--id">ID: ${character.gameId}</div>` : ''}
+                    ${character.id ? `<div class="character-badge character-badge--id">ID: ${character.id}</div>` : ''}
                 </div>
             </div>
             <div class="character-actions">
@@ -1591,7 +1565,7 @@ function editCharacter(index) {
 
     // 填充表单
     document.getElementById('charName').value = character.name || '';
-    document.getElementById('charGameId').value = character.gameId || '';
+    document.getElementById('charGameId').value = character.id || '';
     document.getElementById('charTitle').value = character.title || '';
     document.getElementById('charDesc').value = character.desc || '';
     document.getElementById('charTags').value = character.tags ? character.tags.join(', ') : '';
@@ -1633,9 +1607,8 @@ function saveCharacter() {
     const art = artInput ? artInput.split('\n').map(url => url.trim()).filter(url => url) : [];
 
     const characterData = {
-        id: currentEditingIndex >= 0 ? getCharacterDataFromStorage()[currentEditingIndex].id : 'char_' + Date.now(),
+        id: gameId || (currentEditingIndex >= 0 ? getCharacterDataFromStorage()[currentEditingIndex].id : 'char_' + Date.now()),
         name: name,
-        gameId: gameId,
         title: title,
         desc: desc,
         tags: tags,
@@ -1709,3 +1682,48 @@ window.saveCharacter = saveCharacter;
 window.resetCharacterForm = resetCharacterForm;
 window.exitCharacterManagement = exitCharacterManagement;
 window.clearSearch = clearSearch;
+window.exportCharacterData = exportCharacterData;
+
+// 导出角色数据功能
+function exportCharacterData() {
+    try {
+        const characters = getCharacterDataFromStorage();
+        
+        // 创建导出数据
+        const exportData = {
+            exportTime: new Date().toISOString(),
+            totalCount: characters.length,
+            characters: characters
+        };
+        
+        // 转换为JSON字符串
+        const jsonString = JSON.stringify(exportData, null, 2);
+        
+        // 创建Blob对象
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        
+        // 创建下载链接
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        
+        // 生成文件名（包含时间戳）
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        link.download = `百业风华录-角色数据-${timestamp}.json`;
+        
+        // 触发下载
+        document.body.appendChild(link);
+        link.click();
+        
+        // 清理
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        // 显示成功消息
+        alert(`成功导出 ${characters.length} 个角色的数据！`);
+        
+    } catch (error) {
+        console.error('导出数据失败:', error);
+        alert('导出数据失败，请稍后重试！');
+    }
+}
