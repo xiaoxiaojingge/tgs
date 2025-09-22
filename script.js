@@ -1252,6 +1252,23 @@ function initializeApp() {
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', initializeApp);
+window.addEventListener('keydown', function (event) {
+    if (event.ctrlKey && (event.keyCode === 107 || event.keyCode === 109 || event.keyCode === 187 || event.keyCode === 189)) {
+        event.preventDefault();
+    }
+});
+window.addEventListener('mousewheel', function (event) {
+    if (event.ctrlKey === true || event.metaKey) {
+        event.preventDefault();
+    }
+}, {passive: false});
+// firefox
+window.addEventListener('DOMMouseScroll', function (event) {
+    if (event.ctrlKey === true || event.metaKey) {
+        event.preventDefault();
+    }
+}, {passive: false});
+
 
 // 角色管理功能
 let tripleClickTimer = null;
@@ -1688,40 +1705,40 @@ window.exportCharacterData = exportCharacterData;
 function exportCharacterData() {
     try {
         const characters = getCharacterDataFromStorage();
-        
+
         // 创建导出数据
         const exportData = {
             exportTime: new Date().toISOString(),
             totalCount: characters.length,
             characters: characters
         };
-        
+
         // 转换为JSON字符串
         const jsonString = JSON.stringify(exportData, null, 2);
-        
+
         // 创建Blob对象
-        const blob = new Blob([jsonString], { type: 'application/json' });
-        
+        const blob = new Blob([jsonString], {type: 'application/json'});
+
         // 创建下载链接
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        
+
         // 生成文件名（包含时间戳）
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
         link.download = `百业风华录-角色数据-${timestamp}.json`;
-        
+
         // 触发下载
         document.body.appendChild(link);
         link.click();
-        
+
         // 清理
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-        
+
         // 显示成功消息
         alert(`成功导出 ${characters.length} 个角色的数据！`);
-        
+
     } catch (error) {
         console.error('导出数据失败:', error);
         alert('导出数据失败，请稍后重试！');
