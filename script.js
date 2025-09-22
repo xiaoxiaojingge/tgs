@@ -561,6 +561,35 @@ function handleNavbarScroll() {
     }
 }
 
+// 处理分页组件可见性
+function handlePaginationVisibility() {
+    const characterGallery = document.getElementById('characterGallery');
+    const pagination = document.querySelector('.character-showcase__pagination');
+    
+    if (!characterGallery || !pagination) return;
+    
+    // 检查是否在角色管理模式
+    if (isCharacterManagementMode) {
+        pagination.style.display = 'none';
+        return;
+    }
+    
+    // 获取百业人员区域的位置信息
+    const rect = characterGallery.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // 判断百业人员区域是否在视口内
+    const isVisible = rect.top < windowHeight && rect.bottom > 0;
+    
+    if (isVisible) {
+        pagination.style.display = 'flex';
+        pagination.style.opacity = '1';
+    } else {
+        pagination.style.display = 'none';
+        pagination.style.opacity = '0';
+    }
+}
+
 // 平滑滚动到指定区域
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
@@ -1150,6 +1179,7 @@ function initializeApp() {
 
     // 绑定滚动事件
     window.addEventListener('scroll', handleNavbarScroll);
+    window.addEventListener('scroll', handlePaginationVisibility);
 
     // 初始化轮播并设置视频源
     updateDemoVideoCarousel();
@@ -1187,6 +1217,9 @@ function initializeApp() {
             }
         }
     }
+
+    // 初始化角色数据（从存储加载）
+    initCharacterData();
 
     // 初始化角色系统
     renderCharacterList();
@@ -1240,10 +1273,422 @@ function initializeApp() {
             });
         }
     }, {once: true});
+
+    // 添加百业人员标题三击事件监听器
+    initCharacterManagement();
+
+    // 初始化分页组件可见性
+    setTimeout(() => {
+        handlePaginationVisibility();
+    }, 100);
 }
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', initializeApp);
+
+// 角色管理功能
+let tripleClickTimer = null;
+let clickCount = 0;
+let isCharacterManagementMode = false;
+
+// 初始化角色管理功能
+function initCharacterManagement() {
+    const characterTitle = document.getElementById('characterGalleryTitle');
+    if (!characterTitle) return;
+
+    characterTitle.addEventListener('click', handleCharacterTitleClick);
+    characterTitle.style.cursor = 'pointer';
+    characterTitle.style.userSelect = 'none';
+}
+
+// 处理百业人员标题点击事件
+function handleCharacterTitleClick() {
+    clickCount++;
+
+    if (clickCount === 1) {
+        tripleClickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 500); // 500ms内完成三击
+    } else if (clickCount === 3) {
+        clearTimeout(tripleClickTimer);
+        clickCount = 0;
+
+        // 触发三击事件
+        if (isCharacterManagementMode) {
+            exitCharacterManagement();
+        } else {
+            enterCharacterManagement();
+        }
+    }
+}
+
+// 进入角色管理模式
+function enterCharacterManagement() {
+    isCharacterManagementMode = true;
+
+    // 创建管理页面
+    createCharacterManagementPage();
+
+    // 隐藏分页组件
+    handlePaginationVisibility();
+
+    console.log('进入角色管理模式');
+}
+
+// 退出角色管理模式
+function exitCharacterManagement() {
+    isCharacterManagementMode = false;
+
+    // 移除管理页面
+    removeCharacterManagementPage();
+
+    // 重新加载角色数据确保同步
+    initCharacterData();
+
+    // 重新渲染角色列表
+    renderCharacterList();
+    renderPageIndicators();
+    updateCharacterDisplay();
+
+    // 恢复分页组件显示
+    handlePaginationVisibility();
+
+    console.log('退出角色管理模式，数据已同步');
+}
+
+// 创建角色管理页面
+function createCharacterManagementPage() {
+    // 隐藏原始内容
+    const characterGallery = document.getElementById('characterGallery');
+    if (characterGallery) {
+        characterGallery.style.display = 'none';
+    }
+
+    // 创建管理页面容器
+    const managementPage = document.createElement('div');
+    managementPage.id = 'characterManagementPage';
+    managementPage.className = 'character-management-page';
+
+    managementPage.innerHTML = `
+        <div class="character-management-container">
+            <div class="character-management-header">
+                <h2>百业人员管理</h2>
+                <div class="character-management-actions">
+                    <button class="btn btn--add" onclick="addNewCharacter()">添加角色</button>
+                    <button class="btn btn--secondary" onclick="exitCharacterManagement()">返回展示</button>
+                </div>
+            </div>
+            
+            <div class="character-management-content">
+                <div class="character-list-management">
+                    <div class="character-list-header">
+                        <h3>角色列表</h3>
+                        <div class="character-count" id="characterCount">总计: 0 人</div>
+                    </div>
+                    <div class="character-search-container">
+                        <input type="text" id="characterSearchInput" placeholder="搜索角色名称或游戏ID..." class="character-search-input">
+                        <button class="btn btn--secondary btn--small" onclick="clearSearch()">清空</button>
+                    </div>
+                    <div id="characterManagementList" class="character-management-list">
+                        <!-- 角色管理列表将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <div class="character-edit-panel">
+                    <h3>角色编辑</h3>
+                    <div id="characterEditForm" class="character-edit-form">
+                        <div class="form-group">
+                            <label for="charName">角色名称:</label>
+                            <input type="text" id="charName" placeholder="请输入角色名称">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="charGameId">游戏ID:</label>
+                            <input type="text" id="charGameId" placeholder="请输入游戏ID">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="charTitle">角色称号:</label>
+                            <input type="text" id="charTitle" placeholder="请输入角色称号">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="charDesc">角色描述:</label>
+                            <textarea id="charDesc" placeholder="请输入角色描述"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="charTags">角色标签:</label>
+                            <input type="text" id="charTags" placeholder="请输入标签，用逗号分隔">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="charAvatar">头像URL:</label>
+                            <input type="url" id="charAvatar" placeholder="请输入头像图片URL">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="charArt">立绘URLs:</label>
+                            <textarea id="charArt" placeholder="请输入立绘URLs，每行一个"></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn-role btn--save" onclick="saveCharacter()">保存角色</button>
+                            <button class="btn-role btn--cancel" onclick="resetCharacterForm()">重置表单</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 插入到页面中（在百业人员和关于我们之间）
+    const aboutSection = document.getElementById('aboutSection');
+    if (aboutSection) {
+        aboutSection.parentNode.insertBefore(managementPage, aboutSection);
+    } else {
+        // 如果找不到关于我们区域，插入到body末尾
+        document.body.appendChild(managementPage);
+    }
+
+    // 渲染管理列表
+    renderCharacterManagementList();
+}
+
+// 移除角色管理页面
+function removeCharacterManagementPage() {
+    const managementPage = document.getElementById('characterManagementPage');
+    if (managementPage) {
+        managementPage.remove();
+    }
+
+    // 显示原始内容
+    const characterGallery = document.getElementById('characterGallery');
+    if (characterGallery) {
+        characterGallery.style.display = 'block';
+    }
+
+    // 确保后续内容正常显示
+    const aboutSection = document.getElementById('aboutSection');
+    if (aboutSection) {
+        aboutSection.style.position = 'relative';
+        aboutSection.style.zIndex = 'auto';
+    }
+
+    // 滚动到百业人员区域
+    setTimeout(() => {
+        scrollToSection('characterGallery');
+    }, 100);
+}
+
+// 渲染角色管理列表
+function renderCharacterManagementList(searchTerm = '') {
+    const managementList = document.getElementById('characterManagementList');
+    if (!managementList) return;
+
+    managementList.innerHTML = '';
+
+    // 获取当前角色数据
+    const characters = getCharacterDataFromStorage();
+    
+    // 更新人员数量显示
+    const characterCount = document.getElementById('characterCount');
+    if (characterCount) {
+        characterCount.textContent = `总计: ${characters.length} 人`;
+    }
+
+    // 过滤角色数据
+    const filteredCharacters = characters.filter((character, index) => {
+        if (!searchTerm) return true;
+        const searchLower = searchTerm.toLowerCase();
+        const nameMatch = character.name.toLowerCase().includes(searchLower);
+        const gameIdMatch = character.gameId && character.gameId.toLowerCase().includes(searchLower);
+        return nameMatch || gameIdMatch;
+    });
+
+    if (filteredCharacters.length === 0) {
+        managementList.innerHTML = '<div class="no-results">没有找到匹配的角色</div>';
+        return;
+    }
+
+    filteredCharacters.forEach((character) => {
+        const originalIndex = characters.findIndex(c => c.id === character.id);
+        const listItem = document.createElement('div');
+        listItem.className = 'character-management-item';
+        listItem.innerHTML = `
+            <div class="character-info">
+                <img src="${character.avatar}" alt="${character.name}" class="character-avatar-small">
+                <div class="character-details">
+                    <h4>${character.name}</h4>
+                    ${character.title ? `<div class="character-badge character-badge--title">${character.title}</div>` : ''}
+                    ${character.gameId ? `<div class="character-badge character-badge--id">ID: ${character.gameId}</div>` : ''}
+                </div>
+            </div>
+            <div class="character-actions">
+                <button class="btn btn--small btn--edit" onclick="editCharacter(${originalIndex})">编辑</button>
+                <button class="btn btn--small btn--danger" onclick="deleteCharacter(${originalIndex})">删除</button>
+            </div>
+        `;
+        managementList.appendChild(listItem);
+    });
+
+    // 绑定搜索事件
+    const searchInput = document.getElementById('characterSearchInput');
+    if (searchInput && !searchInput.hasListener) {
+        searchInput.addEventListener('input', (e) => {
+            renderCharacterManagementList(e.target.value);
+        });
+        searchInput.hasListener = true;
+    }
+}
+
+// 角色数据存储管理
+function getCharacterDataFromStorage() {
+    const storedData = localStorage.getItem('characterData');
+    if (storedData) {
+        try {
+            return JSON.parse(storedData);
+        } catch (e) {
+            console.error('解析存储的角色数据失败:', e);
+        }
+    }
+    // 如果没有存储数据，返回原始数据的副本
+    return JSON.parse(JSON.stringify(characterData));
+}
+
+function saveCharacterDataToStorage(data) {
+    try {
+        localStorage.setItem('characterData', JSON.stringify(data));
+        // 更新全局变量
+        window.characterData = data;
+        // 强制更新原始数据源
+        if (typeof characterData !== 'undefined') {
+            characterData.length = 0;
+            characterData.push(...data);
+        }
+        console.log('角色数据已保存并同步');
+        return true;
+    } catch (e) {
+        console.error('保存角色数据失败:', e);
+        return false;
+    }
+}
+
+// 角色编辑功能
+let currentEditingIndex = -1;
+
+function addNewCharacter() {
+    currentEditingIndex = -1;
+    resetCharacterForm();
+}
+
+function editCharacter(index) {
+    currentEditingIndex = index;
+    const characters = getCharacterDataFromStorage();
+    const character = characters[index];
+
+    if (!character) return;
+
+    // 填充表单
+    document.getElementById('charName').value = character.name || '';
+    document.getElementById('charGameId').value = character.gameId || '';
+    document.getElementById('charTitle').value = character.title || '';
+    document.getElementById('charDesc').value = character.desc || '';
+    document.getElementById('charTags').value = character.tags ? character.tags.join(', ') : '';
+    document.getElementById('charAvatar').value = character.avatar || '';
+    document.getElementById('charArt').value = character.art ? character.art.join('\n') : '';
+}
+
+function deleteCharacter(index) {
+    if (confirm('确定要删除这个角色吗？')) {
+        const characters = getCharacterDataFromStorage();
+        characters.splice(index, 1);
+
+        if (saveCharacterDataToStorage(characters)) {
+            renderCharacterManagementList();
+            resetCharacterForm();
+            console.log('角色删除成功');
+        }
+    }
+}
+
+function saveCharacter() {
+    const name = document.getElementById('charName').value.trim();
+    const gameId = document.getElementById('charGameId').value.trim();
+    const title = document.getElementById('charTitle').value.trim();
+    const desc = document.getElementById('charDesc').value.trim();
+    const tagsInput = document.getElementById('charTags').value.trim();
+    const avatar = document.getElementById('charAvatar').value.trim();
+    const artInput = document.getElementById('charArt').value.trim();
+
+    if (!name) {
+        alert('请输入角色名称');
+        return;
+    }
+
+    // 处理标签
+    const tags = tagsInput ? tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
+
+    // 处理立绘URLs
+    const art = artInput ? artInput.split('\n').map(url => url.trim()).filter(url => url) : [];
+
+    const characterData = {
+        id: currentEditingIndex >= 0 ? getCharacterDataFromStorage()[currentEditingIndex].id : 'char_' + Date.now(),
+        name: name,
+        gameId: gameId,
+        title: title,
+        desc: desc,
+        tags: tags,
+        avatar: avatar,
+        art: art
+    };
+
+    const characters = getCharacterDataFromStorage();
+
+    if (currentEditingIndex >= 0) {
+        // 编辑现有角色
+        characters[currentEditingIndex] = characterData;
+    } else {
+        // 添加新角色
+        characters.push(characterData);
+    }
+
+    if (saveCharacterDataToStorage(characters)) {
+        renderCharacterManagementList();
+        resetCharacterForm();
+        alert(currentEditingIndex >= 0 ? '角色更新成功' : '角色添加成功');
+    } else {
+        alert('保存失败，请重试');
+    }
+}
+
+function resetCharacterForm() {
+    currentEditingIndex = -1;
+    document.getElementById('charName').value = '';
+    document.getElementById('charGameId').value = '';
+    document.getElementById('charTitle').value = '';
+    document.getElementById('charDesc').value = '';
+    document.getElementById('charTags').value = '';
+    document.getElementById('charAvatar').value = '';
+    document.getElementById('charArt').value = '';
+}
+
+// 清空搜索
+function clearSearch() {
+    const searchInput = document.getElementById('characterSearchInput');
+    if (searchInput) {
+        searchInput.value = '';
+        renderCharacterManagementList('');
+    }
+}
+
+// 初始化时从存储加载数据
+function initCharacterData() {
+    const storedData = getCharacterDataFromStorage();
+    if (storedData && storedData.length > 0) {
+        window.characterData = storedData;
+    }
+}
 
 // 全局函数暴露（供HTML内联事件使用）
 window.scrollToSection = scrollToSection;
@@ -1256,3 +1701,11 @@ window.nextPage = nextPage;
 window.goToPage = goToPage;
 window.selectCharacter = selectCharacter;
 window.nextCharacterArt = nextCharacterArt;
+// 角色管理相关函数
+window.addNewCharacter = addNewCharacter;
+window.editCharacter = editCharacter;
+window.deleteCharacter = deleteCharacter;
+window.saveCharacter = saveCharacter;
+window.resetCharacterForm = resetCharacterForm;
+window.exitCharacterManagement = exitCharacterManagement;
+window.clearSearch = clearSearch;

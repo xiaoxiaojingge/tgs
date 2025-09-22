@@ -8,7 +8,7 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
     // 网站基本信息
     // ====================================
     site: { // 网站基础信息配置
-        title: "云间来客 - 燕云十六声百业搜索", // 网站标题，显示在浏览器标签页
+        title: "云间来客 - 百业风华录", // 网站标题，显示在浏览器标签页
         description: "云间来客致力于展示各流派咸鱼人生的风采。" // 网站描述，用于SEO优化
     },
 
@@ -223,7 +223,7 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
     audio: { // 音频播放器配置
         backgroundMusic: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1758424375681_qdqqd_t01hdm.mp3", // 背景音乐文件路径，将音频上传图床，后获得的链接
         defaultVolume: 0.3, // 默认音量大小（0-1之间）
-        autoPlay: true, // 是否自动播放音乐
+        autoPlay: false, // 是否自动播放音乐
         loop: true, // 是否循环播放音乐
         playerColors: { // 音频播放器颜色配置
             background: "rgba(0, 0, 0, 0.7)", // 播放器背景色，rgba最后一位数是透明度，前三位数是颜色数据，具体看gitee常用命令上方的基础颜色
