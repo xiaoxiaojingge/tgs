@@ -575,7 +575,7 @@ function scrollToSection(sectionId) {
 }
 
 // 演示视频轮播功能
-function updateDemoVideoCarousel() {
+/*function updateDemoVideoCarousel() {
     const cards = document.querySelectorAll('.video-section__video');
 
     // 如果只有一个卡片，直接为它设置当前索引对应的视频源
@@ -654,15 +654,26 @@ function updateDemoVideoCarousel() {
             }
         });
     }
+}*/
+
+function updateDemoVideoCarousel() {
+    const currentVideo = demoVideos[currentDemoVideoIndex];
+    const video = {
+        url: currentVideo.videoUrl,
+        pic: currentVideo.poster,
+    }
+    dp.switchVideo(video);
 }
 
 function prevDemoVideo() {
     currentDemoVideoIndex = (currentDemoVideoIndex - 1 + demoVideos.length) % demoVideos.length;
+    console.log(currentArtIndex)
     updateDemoVideoCarousel();
 }
 
 function nextDemoVideo() {
     currentDemoVideoIndex = (currentDemoVideoIndex + 1) % demoVideos.length;
+    console.log(currentArtIndex)
     updateDemoVideoCarousel();
 }
 
@@ -1780,7 +1791,7 @@ function renderWeeklyReportHeader() {
     if (!container || !weeklyReportData.guildInfo) return;
 
     const guildInfo = weeklyReportData.guildInfo;
-    
+
     container.innerHTML = `
         <div class="weekly-report-logo">
             <img src="${guildInfo.logo}" alt="${guildInfo.name}" loading="lazy">
@@ -1962,7 +1973,7 @@ function renderWeeklySummary() {
     if (!container || !weeklyReportData.weeklySummary) return;
 
     const summary = weeklyReportData.weeklySummary;
-    
+
     // 生成高亮项目HTML
     const highlightsHTML = summary.highlights.map(highlight => `
         <div class="highlight-item ${highlight.type}">
@@ -1970,7 +1981,7 @@ function renderWeeklySummary() {
             <span class="highlight-text">${highlight.text}</span>
         </div>
     `).join('');
-    
+
     container.innerHTML = `
         <h4 class="section-title">${summary.title}</h4>
         <div class="summary-content">
@@ -1991,20 +2002,20 @@ function renderWeeklyReportFooter() {
 
     const stats = weeklyReportData.stats;
     const footerInfo = weeklyReportData.footerInfo;
-    
+
     // 生成统计卡片HTML
     const statsHTML = Object.keys(stats).map(key => {
         const stat = stats[key];
         const cardClass = key; // prosperity, ranking, members, activities
-        
+
         // 根据不同类型生成不同的内容
         let contentHTML = '';
         if (stat.trend) {
-            contentHTML = `<div class="stat-trend">↗ ${stat.trend}</div>`;
+            contentHTML = `<div class="stat-trend">${stat.trend}</div>`;
         } else if (stat.badge) {
             contentHTML = `<div class="stat-badge">${stat.badge}</div>`;
         }
-        
+
         return `
             <div class="stat-card ${cardClass}">
                 <div class="stat-icon">${stat.icon}</div>
@@ -2016,7 +2027,7 @@ function renderWeeklyReportFooter() {
             </div>
         `;
     }).join('');
-    
+
     container.innerHTML = `
         <div class="footer-stats-grid">
             ${statsHTML}
