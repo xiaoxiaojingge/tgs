@@ -667,13 +667,11 @@ function updateDemoVideoCarousel() {
 
 function prevDemoVideo() {
     currentDemoVideoIndex = (currentDemoVideoIndex - 1 + demoVideos.length) % demoVideos.length;
-    console.log(currentArtIndex)
     updateDemoVideoCarousel();
 }
 
 function nextDemoVideo() {
     currentDemoVideoIndex = (currentDemoVideoIndex + 1) % demoVideos.length;
-    console.log(currentArtIndex)
     updateDemoVideoCarousel();
 }
 
@@ -1164,9 +1162,13 @@ function initializeApp() {
     // 绑定滚动事件
     window.addEventListener('scroll', handleNavbarScroll);
 
-    // 初始化轮播并设置视频源
-    updateDemoVideoCarousel();
-    updateOrgCarousel();
+    // 检查当前页面是否为首页，只有首页才初始化这些功能
+    const isIndexPage = document.getElementById('heroSection') !== null;
+
+    if (isIndexPage) {
+        // 初始化轮播并设置视频源
+        updateDemoVideoCarousel();
+        updateOrgCarousel();
 
     // 确保初始视频源已设置
     if (demoVideos.length > 0) {
@@ -1201,51 +1203,91 @@ function initializeApp() {
         }
     }
 
-    // 初始化角色数据（从存储加载）
-    initCharacterData();
+        // 初始化角色数据（从存储加载）
+        initCharacterData();
 
-    // 初始化角色系统
-    renderCharacterList();
-    renderPageIndicators();
-    updateCharacterDisplay();
+        // 初始化角色系统
+        renderCharacterList();
+        renderPageIndicators();
+        updateCharacterDisplay();
 
-    // 预加载角色图片
-    preloadCharacterImages();
+        // 预加载角色图片
+        preloadCharacterImages();
 
-    // 绑定导航链接点击事件
+        // 初始化背景管理器
+        // MediaUtils.initializeBackgrounds();
+
+        // MediaUtils.playVideo('#videoShowcase', CONFIG.videoShowcase.videoUrl);
+        if (CONFIG.videoShowcase.background) {
+            try {
+                MediaUtils.initSectionBackground('#videoShowcase', CONFIG.videoShowcase.background);
+            } catch (error) {
+                console.warn('Video showcase background initialization failed:', error);
+                // 如果视频初始化失败，尝试使用图片作为备用
+                console.log('Using image as fallback for video showcase background');
+                setTraditionalBackground('#videoShowcase', CONFIG.videoShowcase.background);
+            }
+        }
+
+        if (CONFIG.organizationActivities.background) {
+            try {
+                MediaUtils.initSectionBackground('#organizationActivities', CONFIG.organizationActivities.background);
+            } catch (error) {
+                console.warn('Organization activities background initialization failed:', error);
+                console.log('Using image as fallback for organization activities background');
+                setTraditionalBackground('#organizationActivities', CONFIG.organizationActivities.background);
+            }
+        }
+
+        if (CONFIG.characterGallery.background) {
+            try {
+                MediaUtils.initSectionBackground('#characterGallery', CONFIG.characterGallery.background);
+            } catch (error) {
+                console.warn('Character gallery background initialization failed:', error);
+                console.log('Using image as fallback for character gallery background');
+                setTraditionalBackground('#characterGallery', CONFIG.characterGallery.background);
+            }
+        }
+
+        // 角色信息面板鼠标事件
+        const characterInfoPanel = document.getElementById('characterInfoPanel');
+        if (characterInfoPanel) {
+            characterInfoPanel.addEventListener('mouseenter', () => {
+                clearTimeout(hideTimer);
+                showCharacterInfo();
+            });
+
+            characterInfoPanel.addEventListener('mouseleave', () => {
+                hideTimer = setTimeout(hideCharacterInfo, time);
+            });
+
+            hideTimer = setTimeout(hideCharacterInfo, time);
+        }
+
+        // 角色立绘图片加载事件
+        const artImg = document.getElementById('characterArtworkImage');
+        if (artImg) {
+            artImg.addEventListener('load', handleImageLoad);
+            if (artImg.complete) {
+                handleImageLoad({target: artImg});
+            }
+        }
+
+        // 添加百业人员标题三击事件监听器
+        initCharacterManagement();
+    }
+
+    // 绑定导航链接点击事件（只对首页的锚点链接进行拦截）
     document.querySelectorAll('.main-nav__link').forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
             const href = link.getAttribute('href');
-            if (href && href.startsWith('#')) {
+            if (href && href.startsWith('#') && isIndexPage) {
+                e.preventDefault();
                 scrollToSection(href.substring(1));
             }
+            // 对于其他链接（如 weekly-report.html），让浏览器正常处理
         });
     });
-
-    // 角色信息面板鼠标事件
-    const characterInfoPanel = document.getElementById('characterInfoPanel');
-    if (characterInfoPanel) {
-        characterInfoPanel.addEventListener('mouseenter', () => {
-            clearTimeout(hideTimer);
-            showCharacterInfo();
-        });
-
-        characterInfoPanel.addEventListener('mouseleave', () => {
-            hideTimer = setTimeout(hideCharacterInfo, time);
-        });
-
-        hideTimer = setTimeout(hideCharacterInfo, time);
-    }
-
-    // 角色立绘图片加载事件
-    const artImg = document.getElementById('characterArtworkImage');
-    if (artImg) {
-        artImg.addEventListener('load', handleImageLoad);
-        if (artImg.complete) {
-            handleImageLoad({target: artImg});
-        }
-    }
 
     // 处理用户交互后的自动播放
     document.addEventListener('click', () => {
@@ -1257,11 +1299,7 @@ function initializeApp() {
         }
     }, {once: true});
 
-    // 添加百业人员标题三击事件监听器
-    initCharacterManagement();
-
-    // 初始化百业周报
-    initWeeklyReport();
+    // 百业周报初始化已迁移到 weekly-report.html 中
 
 }
 
@@ -1760,308 +1798,5 @@ function exportCharacterData() {
     }
 }
 
-// ==================== 百业周报功能 ====================
-
-// 初始化百业周报
-function initWeeklyReport() {
-    if (typeof weeklyReportData === 'undefined') {
-        console.error('百业周报数据未找到');
-        return;
-    }
-
-    try {
-        renderWeeklyReportHeader();
-        renderActiveMembersRanking();
-        renderLoveMusicTop5();
-        renderMvpLeaders();
-        renderBattleRecords();
-        renderBattleMembers();
-        renderWeeklySummary();
-        renderWeeklyReportFooter();
-        renderNewMembers();
-        console.log('百业周报初始化完成');
-    } catch (error) {
-        console.error('百业周报初始化失败:', error);
-    }
-}
-
-// 渲染周报头部信息
-function renderWeeklyReportHeader() {
-    const container = document.getElementById('weeklyReportHeader');
-    if (!container || !weeklyReportData.guildInfo) return;
-
-    const guildInfo = weeklyReportData.guildInfo;
-
-    container.innerHTML = `
-        <div class="weekly-report-logo">
-            <img src="${guildInfo.logo}" alt="${guildInfo.name}" loading="lazy">
-        </div>
-        <div class="weekly-report-title">
-            <h3>${guildInfo.name}</h3>
-            <div class="weekly-report-issue">No.${guildInfo.id}</div>
-        </div>
-        <div class="weekly-report-leaders">
-            <div class="leader-card">
-                <img src="${guildInfo.leader.avatar}" alt="${guildInfo.leader.title}" loading="lazy">
-                <div class="leader-info">
-                    <div class="leader-title">${guildInfo.leader.title}</div>
-                    <div class="leader-name">${guildInfo.leader.name}</div>
-                </div>
-            </div>
-            <div class="leader-card">
-                <img src="${guildInfo.viceLeader.avatar}" alt="${guildInfo.viceLeader.title}" loading="lazy">
-                <div class="leader-info">
-                    <div class="leader-title">${guildInfo.viceLeader.title}</div>
-                    <div class="leader-name">${guildInfo.viceLeader.name}</div>
-                </div>
-            </div>
-        </div>
-        <div class="weekly-report-date">${weeklyReportData.date}</div>
-    `;
-}
-
-// 渲染活跃成员排行榜
-function renderActiveMembersRanking() {
-    const container = document.getElementById('activeMembersRanking');
-    if (!container || !weeklyReportData.activeMembers) return;
-
-    container.innerHTML = '';
-
-    weeklyReportData.activeMembers.forEach(member => {
-        const rankingItem = document.createElement('div');
-        rankingItem.className = 'ranking-item';
-
-        rankingItem.innerHTML = `
-            <div class="ranking-number">${member.rank}</div>
-            <div class="ranking-name">${member.name}</div>
-            <div class="ranking-score">${member.score}</div>
-        `;
-
-        container.appendChild(rankingItem);
-    });
-}
-
-// 渲染恋与音领TOP5
-function renderLoveMusicTop5() {
-    const container = document.getElementById('loveMusicLeaders');
-    if (!container || !weeklyReportData.loveMusicLeaders) return;
-
-    container.innerHTML = '';
-
-    weeklyReportData.loveMusicLeaders.forEach(leader => {
-        const leaderDiv = document.createElement('div');
-        leaderDiv.className = 'leader-section';
-
-        // 创建首领头部信息
-        const headerHTML = `
-            <div class="leader-header">
-                <img src="${leader.leaderAvatar}" alt="${leader.leaderName}" class="leader-avatar" loading="lazy">
-                <div class="leader-info">
-                    <h5>${leader.leaderName}</h5>
-                    <div class="leader-title">首领挑战记录</div>
-                </div>
-            </div>
-        `;
-
-        // 创建记录列表
-        const recordsHTML = leader.top5Records.map(record => `
-            <div class="record-item">
-                <div class="record-rank rank-${record.rank}">${record.rank}</div>
-                <div class="record-name">${record.name}</div>
-                <div class="record-time">${record.time}</div>
-            </div>
-        `).join('');
-
-        leaderDiv.innerHTML = `
-            ${headerHTML}
-            <div class="leader-records">
-                ${recordsHTML}
-            </div>
-        `;
-
-        container.appendChild(leaderDiv);
-    });
-}
-
-// 渲染百业侠境MVP榜
-function renderMvpLeaders() {
-    const container = document.getElementById('mvpLeaders');
-    if (!container || !weeklyReportData.mvpLeaders) return;
-
-    container.innerHTML = '';
-
-    weeklyReportData.mvpLeaders.forEach(boss => {
-        const bossDiv = document.createElement('div');
-        bossDiv.className = 'mvp-boss-section';
-
-        // 创建Boss头部信息
-        const headerHTML = `
-            <div class="mvp-boss-header">
-                <img src="${boss.bossAvatar}" alt="${boss.bossName}" class="mvp-boss-avatar" loading="lazy">
-                <div class="mvp-boss-info">
-                    <h5>${boss.bossName}</h5>
-                    <div class="mvp-boss-title">伤害排行榜</div>
-                </div>
-            </div>
-        `;
-
-        // 创建记录列表
-        const recordsHTML = boss.top5Records.map(record => `
-            <div class="mvp-record-item">
-                <div class="mvp-record-rank rank-${record.rank}">${record.rank}</div>
-                <div class="mvp-record-name">${record.name}</div>
-                <div class="mvp-record-damage">${record.damage}</div>
-                <div class="mvp-record-dps">${record.dps}</div>
-            </div>
-        `).join('');
-
-        bossDiv.innerHTML = `
-            ${headerHTML}
-            <div class="mvp-records">
-                ${recordsHTML}
-            </div>
-        `;
-
-        container.appendChild(bossDiv);
-    });
-}
-
-// 渲染百业战记录
-function renderBattleRecords() {
-    const container = document.getElementById('battleRecords');
-    if (!container || !weeklyReportData.battleRecords) return;
-
-    container.innerHTML = '';
-
-    weeklyReportData.battleRecords.forEach(record => {
-        const recordDiv = document.createElement('div');
-        recordDiv.className = 'battle-record';
-
-        const resultText = record.result === 'win' ? '胜' : '负';
-        const resultClass = record.result === 'win' ? 'win' : 'lose';
-
-        recordDiv.innerHTML = `
-            <div class="battle-opponent">${record.opponent}</div>
-            <div class="battle-result ${resultClass}">${resultText}</div>
-        `;
-
-        container.appendChild(recordDiv);
-    });
-}
-
-// 渲染百业战成员头像
-function renderBattleMembers() {
-    const container = document.getElementById('battleMembers');
-    if (!container || !weeklyReportData.battleMembers) return;
-
-    container.innerHTML = '';
-
-    weeklyReportData.battleMembers.forEach(avatarUrl => {
-        const memberImg = document.createElement('img');
-        memberImg.className = 'battle-member';
-        memberImg.src = avatarUrl;
-        memberImg.alt = '战斗成员';
-        memberImg.loading = 'lazy';
-
-        container.appendChild(memberImg);
-    });
-}
-
-// 渲染上周纂要
-function renderWeeklySummary() {
-    const container = document.getElementById('weeklySummary');
-    if (!container || !weeklyReportData.weeklySummary) return;
-
-    const summary = weeklyReportData.weeklySummary;
-
-    // 生成高亮项目HTML
-    const highlightsHTML = summary.highlights.map(highlight => `
-        <div class="highlight-item ${highlight.type}">
-            <span class="highlight-label">${highlight.label}</span>
-            <span class="highlight-text">${highlight.text}</span>
-        </div>
-    `).join('');
-
-    container.innerHTML = `
-        <h4 class="section-title">${summary.title}</h4>
-        <div class="summary-content">
-            <div class="summary-item">
-                <span class="summary-date">${summary.mainContent}</span>
-            </div>
-            <div class="summary-highlights">
-                ${highlightsHTML}
-            </div>
-        </div>
-    `;
-}
-
-// 渲染周报底部统计信息
-function renderWeeklyReportFooter() {
-    const container = document.getElementById('weeklyReportFooter');
-    if (!container || !weeklyReportData.stats || !weeklyReportData.footerInfo) return;
-
-    const stats = weeklyReportData.stats;
-    const footerInfo = weeklyReportData.footerInfo;
-
-    // 生成统计卡片HTML
-    const statsHTML = Object.keys(stats).map(key => {
-        const stat = stats[key];
-        const cardClass = key; // prosperity, ranking, members, activities
-
-        // 根据不同类型生成不同的内容
-        let contentHTML = '';
-        if (stat.trend) {
-            contentHTML = `<div class="stat-trend">${stat.trend}</div>`;
-        } else if (stat.badge) {
-            contentHTML = `<div class="stat-badge">${stat.badge}</div>`;
-        }
-
-        return `
-            <div class="stat-card ${cardClass}">
-                <div class="stat-icon">${stat.icon}</div>
-                <div class="stat-content">
-                    <div class="stat-number">${stat.value}</div>
-                    <div class="stat-label">${stat.label}</div>
-                    ${contentHTML}
-                </div>
-            </div>
-        `;
-    }).join('');
-
-    container.innerHTML = `
-        <div class="footer-stats-grid">
-            ${statsHTML}
-        </div>
-        <div class="footer-info">
-            <div class="footer-timestamp">
-                <span class="timestamp-icon">🕐</span>
-                ${footerInfo.timestamp}
-            </div>
-            <div class="footer-version">
-                <span class="version-icon">📊</span>
-                ${footerInfo.version}
-            </div>
-        </div>
-    `;
-}
-
-// 渲染新加入成员
-function renderNewMembers() {
-    const container = document.getElementById('newMembersGrid');
-    if (!container || !weeklyReportData.newMembers) return;
-
-    container.innerHTML = '';
-
-    weeklyReportData.newMembers.forEach(member => {
-        const memberDiv = document.createElement('div');
-        memberDiv.className = 'new-member';
-
-        memberDiv.innerHTML = `
-            <img src="${member.avatar}" alt="${member.name}" loading="lazy">
-            <div class="new-member-name">${member.name}</div>
-        `;
-
-        container.appendChild(memberDiv);
-    });
-}
+// ==================== 百业周报功能已迁移到 weekly-report.html 中 ====================
 

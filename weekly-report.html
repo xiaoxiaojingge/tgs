@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1A202C">
+    <title>百业周报 - 云间来客</title>
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <link rel="stylesheet" href="./CSS/fonts.css">
+    <link rel="stylesheet" href="./CSS/video-responsive.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-575.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-767.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-991.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-1199.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-1439.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-1920.css">
+    <link rel="stylesheet" href="./CSS/resolution-max-2560.css">
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav id="mainNavigation" class="main-nav">
+    <div class="main-nav__container">
+        <div class="main-nav__brand">
+            <img id="navigationLogo" src="" alt="logo2"/>
+            <h2 id="navigationTitle"></h2>
+        </div>
+        <ul class="main-nav__menu">
+            <li><a href="index.html" class="main-nav__link">首页</a></li>
+            <li><a href="index.html#videoShowcase" class="main-nav__link">百业混剪</a></li>
+            <li><a href="index.html#organizationActivities" class="main-nav__link">百业活动</a></li>
+            <li><a href="weekly-report.html" class="main-nav__link main-nav__link--active">百业周报</a></li>
+            <li><a href="index.html#characterGallery" class="main-nav__link">百业人员</a></li>
+            <li><a href="index.html#contactSection" class="main-nav__link">加入我们</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 百业周报页面标题 -->
+<div class="weekly-report-page-header">
+    <div class="section-header">
+        <h1 class="section-header__title">百业周报</h1>
+        <p class="section-header__subtitle">江湖风云，一览无余</p>
+    </div>
+</div>
+
+<!-- 百业周报区域 -->
+<section id="weeklyReport" class="weekly-report-section">
+    <div class="weekly-report-container">
+        <!-- 开封高级会所 -->
+        <div class="weekly-report-header" id="weeklyReportHeader">
+            <!-- 周报头部信息将通过JavaScript动态生成 -->
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="weekly-report-content">
+            <!-- 左侧列：活跃分子 -->
+            <div class="weekly-report-left-column">
+                <div class="active-members-section">
+                    <h4 class="section-title">好厉害的活跃分子</h4>
+                    <div class="members-ranking" id="activeMembersRanking">
+                        <!-- 活跃成员排行榜将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间列：恋与首领 TOP5 -->
+            <div class="weekly-report-center-column">
+                <div class="love-music-section">
+                    <h4 class="section-title">恋与首领 · TOP5</h4>
+                    <div class="love-music-leaders" id="loveMusicLeaders">
+                        <!-- 两个首领的TOP5记录将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧列：百业侠境MVP榜 -->
+            <div class="weekly-report-right-column">
+                <div class="mvp-section">
+                    <h4 class="section-title">百业侠境MVP榜</h4>
+                    <div class="mvp-leaders" id="mvpLeaders">
+                        <!-- 两个Boss的MVP记录将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 下方内容区域 -->
+        <div class="weekly-report-bottom">
+            <!-- 上周纂要 -->
+            <div class="weekly-summary" id="weeklySummary">
+                <!-- 上周纂要内容将通过JavaScript动态生成 -->
+            </div>
+
+            <!-- 百业战·百业栋梁 -->
+            <div class="battle-section">
+                <h4 class="section-title">百业战 · 百业栋梁</h4>
+                <div class="battle-records" id="battleRecords">
+                    <!-- 战绩记录将通过JavaScript动态生成 -->
+                </div>
+                <div class="battle-members" id="battleMembers">
+                    <!-- 战斗成员头像将通过JavaScript动态生成 -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="weekly-report-footer" id="weeklyReportFooter">
+            <!-- 底部统计信息将通过JavaScript动态生成 -->
+        </div>
+
+        <!-- 来人，来！ -->
+        <div class="recruitment-section">
+            <h4 class="section-title">来人，来！</h4>
+            <div class="recruitment-content">
+                <div class="recruitment-highlight">热烈欢迎新加入成员</div>
+                <div class="new-members-grid" id="newMembersGrid">
+                    <!-- 新成员头像网格将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer id="contactSection" class="site-footer">
+    <div class="container">
+        <div class="site-footer__content">
+            <div class="site-footer__section">
+                <h4>云间来客</h4>
+                <p>展示各流派咸鱼人才，弘扬咸鱼精神</p>
+            </div>
+            <div class="site-footer__section">
+                <h4></h4>
+                <p></p>
+            </div>
+            <div class="site-footer__section">
+                <h4>关注我们</h4>
+                <div class="site-footer__social">
+                    <a class="site-footer__social-link"></a>
+                </div>
+            </div>
+        </div>
+        <div class="site-footer__bottom">
+            <p>&copy; 2025 云间来客. 保留所有权利.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/DPlayer.min.js"></script>
+<script src="config.js"></script>
+<script src="imageUtils.js"></script>
+
+<!-- 百业周报独立数据和功能 -->
+<script>
+// ==================== 百业周报数据定义 ====================
+const weeklyReportData = {
+    // 基础信息
+    guildInfo: {
+        name: "云间来客",
+        id: "10398455",
+        logo: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1758552836271_qdqqd_3gp3ep.png",
+        leader: {
+            title: "社主",
+            name: "玉同潇",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar48.avif"
+        },
+        viceLeader: {
+            title: "副社主",
+            name: "江叶如",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar48.avif"
+        }
+    },
+
+    issue: "第一期", // 可以根据需要修改为动态生成
+    date: "每周一报",
+    publishTime: "2025年8月24日 23:00",
+
+    // 活跃成员排行榜
+    activeMembers: [
+        {rank: 1, name: "占位", score: "5575"},
+        {rank: 2, name: "占位", score: "5535"},
+        {rank: 3, name: "占位", score: "5525"},
+        {rank: 4, name: "占位", score: "5415"},
+        {rank: 5, name: "占位", score: "5205"},
+        {rank: 6, name: "占位", score: "5145"},
+        {rank: 7, name: "占位", score: "5025"},
+        {rank: 8, name: "占位", score: "5004"},
+        {rank: 9, name: "占位", score: "4910"},
+        {rank: 10, name: "占位", score: "4705"}
+    ],
+
+    // 恋与音领TOP5数据 - 两个首领的挑战记录
+    loveMusicLeaders: [
+        {
+            leaderName: "占位",
+            leaderAvatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar35.avif",
+            top5Records: [
+                {rank: 1, name: "占位", time: "1'38\""},
+                {rank: 2, name: "占位", time: "1'42\""},
+                {rank: 3, name: "占位", time: "1'48\""},
+                {rank: 4, name: "占位", time: "1'57\""},
+                {rank: 5, name: "占位", time: "2'14\""}
+            ]
+        },
+        {
+            leaderName: "占位",
+            leaderAvatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar35.avif",
+            top5Records: [
+                {rank: 1, name: "占位", time: "1'32\""},
+                {rank: 2, name: "占位", time: "2'38\""},
+                {rank: 3, name: "占位", time: "3'01\""},
+                {rank: 4, name: "占位", time: "3'02\""},
+                {rank: 5, name: "占位", time: "3'28\""}
+            ]
+        }
+    ],
+
+    // 百业侠境MVP榜数据 - 两个Boss的伤害记录
+    mvpLeaders: [
+        {
+            bossName: "占位",
+            bossAvatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar35.avif",
+            top5Records: [
+                {rank: 1, name: "占位", damage: "12.5万", dps: "8,547"},
+                {rank: 2, name: "占位", damage: "11.8万", dps: "7,923"},
+                {rank: 3, name: "占位", damage: "10.9万", dps: "7,234"},
+                {rank: 4, name: "占位", damage: "9.7万", dps: "6,845"},
+                {rank: 5, name: "占位", damage: "8.9万", dps: "6,123"}
+            ]
+        },
+        {
+            bossName: "占位",
+            bossAvatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar35.avif",
+            top5Records: [
+                {rank: 1, name: "占位", damage: "15.2万", dps: "9,876"},
+                {rank: 2, name: "占位", damage: "14.1万", dps: "8,954"},
+                {rank: 3, name: "占位", damage: "13.3万", dps: "8,234"},
+                {rank: 4, name: "占位", damage: "12.7万", dps: "7,891"},
+                {rank: 5, name: "占位", damage: "11.9万", dps: "7,456"}
+            ]
+        }
+    ],
+
+    // 百业战记录
+    battleRecords: [
+        {opponent: "占位", result: "win"},
+        {opponent: "占位", result: "win"},
+    ],
+
+    // 百业战成员头像
+    battleMembers: [
+        "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar11.avif",
+        "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar83.avif",
+        "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar35.avif",
+        "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar61.avif",
+        "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar39.avif"
+    ],
+
+    // 新加入成员
+    newMembers: [
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar11.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar83.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar35.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar61.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar39.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar34.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar42.avif"
+        },
+        {
+            name: "占位",
+            avatar: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/player/avatar/avatar21.avif"
+        }
+    ],
+
+    // 上周纂要内容
+    weeklySummary: {
+        title: "上周纂要",
+        mainContent: "占位。",
+        highlights: [
+            {
+                type: "green",
+                label: "[xxx推荐]",
+                text: "占位"
+            },
+            {
+                type: "blue",
+                label: "[xxx推荐]",
+                text: "占位"
+            },
+            {
+                type: "purple",
+                label: "[xxx推荐]",
+                text: "占位"
+            }
+        ]
+    },
+
+    // 统计数据
+    stats: {
+        prosperity: {
+            value: "999999",
+            trend: "占位",
+            icon: "🏆",
+            label: "百业繁荣度"
+        },
+        ranking: {
+            value: "暂无",
+            badge: "暂无",
+            icon: "🎯",
+            label: "百业排名"
+        },
+        members: {
+            value: "100",
+            trend: "占位",
+            icon: "👥",
+            label: "活跃成员"
+        },
+        activities: {
+            value: "28",
+            trend: "占位",
+            icon: "⚔️",
+            label: "本周活动"
+        }
+    },
+
+    // 底部信息
+    footerInfo: {
+        timestamp: "数据收集时间：2025年8月24日 23:00",
+        version: "周报版本：v1.0.0"
+    }
+};
+
+// ==================== 百业周报功能函数 ====================
+
+// 初始化百业周报
+function initWeeklyReport() {
+    console.log('百业周报页面初始化开始');
+    
+    try {
+        renderWeeklyReportHeader();
+        renderActiveMembersRanking();
+        renderLoveMusicTop5();
+        renderMvpLeaders();
+        renderBattleRecords();
+        renderBattleMembers();
+        renderWeeklySummary();
+        renderWeeklyReportFooter();
+        renderNewMembers();
+        console.log('百业周报初始化完成');
+    } catch (error) {
+        console.error('百业周报初始化失败:', error);
+    }
+}
+
+// 渲染周报头部信息
+function renderWeeklyReportHeader() {
+    const container = document.getElementById('weeklyReportHeader');
+    if (!container || !weeklyReportData.guildInfo) return;
+
+    const guildInfo = weeklyReportData.guildInfo;
+
+    container.innerHTML = `
+        <div class="weekly-report-logo">
+            <img src="${guildInfo.logo}" alt="${guildInfo.name}" loading="lazy">
+        </div>
+        <div class="weekly-report-title">
+            <h3>${guildInfo.name}</h3>
+            <div class="weekly-report-issue">No.${guildInfo.id}</div>
+        </div>
+        <div class="weekly-report-leaders">
+            <div class="leader-card">
+                <img src="${guildInfo.leader.avatar}" alt="${guildInfo.leader.title}" loading="lazy">
+                <div class="leader-info">
+                    <div class="leader-title">${guildInfo.leader.title}</div>
+                    <div class="leader-name">${guildInfo.leader.name}</div>
+                </div>
+            </div>
+            <div class="leader-card">
+                <img src="${guildInfo.viceLeader.avatar}" alt="${guildInfo.viceLeader.title}" loading="lazy">
+                <div class="leader-info">
+                    <div class="leader-title">${guildInfo.viceLeader.title}</div>
+                    <div class="leader-name">${guildInfo.viceLeader.name}</div>
+                </div>
+            </div>
+        </div>
+        <div class="weekly-report-date">${weeklyReportData.date}</div>
+    `;
+}
+
+// 渲染活跃成员排行榜
+function renderActiveMembersRanking() {
+    const container = document.getElementById('activeMembersRanking');
+    if (!container || !weeklyReportData.activeMembers) return;
+
+    container.innerHTML = '';
+
+    weeklyReportData.activeMembers.forEach(member => {
+        const rankingItem = document.createElement('div');
+        rankingItem.className = 'ranking-item';
+
+        rankingItem.innerHTML = `
+            <div class="ranking-number">${member.rank}</div>
+            <div class="ranking-name">${member.name}</div>
+            <div class="ranking-score">${member.score}</div>
+        `;
+
+        container.appendChild(rankingItem);
+    });
+}
+
+// 渲染恋与音领TOP5
+function renderLoveMusicTop5() {
+    const container = document.getElementById('loveMusicLeaders');
+    if (!container || !weeklyReportData.loveMusicLeaders) return;
+
+    container.innerHTML = '';
+
+    weeklyReportData.loveMusicLeaders.forEach(leader => {
+        const leaderDiv = document.createElement('div');
+        leaderDiv.className = 'leader-section';
+
+        // 创建首领头部信息
+        const headerHTML = `
+            <div class="leader-header">
+                <img src="${leader.leaderAvatar}" alt="${leader.leaderName}" class="leader-avatar" loading="lazy">
+                <div class="leader-info">
+                    <h5>${leader.leaderName}</h5>
+                    <div class="leader-title">首领挑战记录</div>
+                </div>
+            </div>
+        `;
+
+        // 创建记录列表
+        const recordsHTML = leader.top5Records.map(record => `
+            <div class="record-item">
+                <div class="record-rank rank-${record.rank}">${record.rank}</div>
+                <div class="record-name">${record.name}</div>
+                <div class="record-time">${record.time}</div>
+            </div>
+        `).join('');
+
+        leaderDiv.innerHTML = `
+            ${headerHTML}
+            <div class="leader-records">
+                ${recordsHTML}
+            </div>
+        `;
+
+        container.appendChild(leaderDiv);
+    });
+}
+
+// 渲染百业侠境MVP榜
+function renderMvpLeaders() {
+    const container = document.getElementById('mvpLeaders');
+    if (!container || !weeklyReportData.mvpLeaders) return;
+
+    container.innerHTML = '';
+
+    weeklyReportData.mvpLeaders.forEach(boss => {
+        const bossDiv = document.createElement('div');
+        bossDiv.className = 'mvp-boss-section';
+
+        // 创建Boss头部信息
+        const headerHTML = `
+            <div class="mvp-boss-header">
+                <img src="${boss.bossAvatar}" alt="${boss.bossName}" class="mvp-boss-avatar" loading="lazy">
+                <div class="mvp-boss-info">
+                    <h5>${boss.bossName}</h5>
+                    <div class="mvp-boss-title">伤害排行榜</div>
+                </div>
+            </div>
+        `;
+
+        // 创建记录列表
+        const recordsHTML = boss.top5Records.map(record => `
+            <div class="mvp-record-item">
+                <div class="mvp-record-rank rank-${record.rank}">${record.rank}</div>
+                <div class="mvp-record-name">${record.name}</div>
+                <div class="mvp-record-damage">${record.damage}</div>
+                <div class="mvp-record-dps">${record.dps}</div>
+            </div>
+        `).join('');
+
+        bossDiv.innerHTML = `
+            ${headerHTML}
+            <div class="mvp-records">
+                ${recordsHTML}
+            </div>
+        `;
+
+        container.appendChild(bossDiv);
+    });
+}
+
+// 渲染百业战记录
+function renderBattleRecords() {
+    const container = document.getElementById('battleRecords');
+    if (!container || !weeklyReportData.battleRecords) return;
+
+    container.innerHTML = '';
+
+    weeklyReportData.battleRecords.forEach(record => {
+        const recordDiv = document.createElement('div');
+        recordDiv.className = 'battle-record';
+
+        const resultText = record.result === 'win' ? '胜' : '负';
+        const resultClass = record.result === 'win' ? 'win' : 'lose';
+
+        recordDiv.innerHTML = `
+            <div class="battle-opponent">${record.opponent}</div>
+            <div class="battle-result ${resultClass}">${resultText}</div>
+        `;
+
+        container.appendChild(recordDiv);
+    });
+}
+
+// 渲染百业战成员头像
+function renderBattleMembers() {
+    const container = document.getElementById('battleMembers');
+    if (!container || !weeklyReportData.battleMembers) return;
+
+    container.innerHTML = '';
+
+    weeklyReportData.battleMembers.forEach(avatarUrl => {
+        const memberImg = document.createElement('img');
+        memberImg.className = 'battle-member';
+        memberImg.src = avatarUrl;
+        memberImg.alt = '战斗成员';
+        memberImg.loading = 'lazy';
+
+        container.appendChild(memberImg);
+    });
+}
+
+// 渲染上周纂要
+function renderWeeklySummary() {
+    const container = document.getElementById('weeklySummary');
+    if (!container || !weeklyReportData.weeklySummary) return;
+
+    const summary = weeklyReportData.weeklySummary;
+
+    // 生成高亮项目HTML
+    const highlightsHTML = summary.highlights.map(highlight => `
+        <div class="highlight-item ${highlight.type}">
+            <span class="highlight-label">${highlight.label}</span>
+            <span class="highlight-text">${highlight.text}</span>
+        </div>
+    `).join('');
+
+    container.innerHTML = `
+        <h4 class="section-title">${summary.title}</h4>
+        <div class="summary-content">
+            <div class="summary-item">
+                <span class="summary-date">${summary.mainContent}</span>
+            </div>
+            <div class="summary-highlights">
+                ${highlightsHTML}
+            </div>
+        </div>
+    `;
+}
+
+// 渲染周报底部统计信息
+function renderWeeklyReportFooter() {
+    const container = document.getElementById('weeklyReportFooter');
+    if (!container || !weeklyReportData.stats || !weeklyReportData.footerInfo) return;
+
+    const stats = weeklyReportData.stats;
+    const footerInfo = weeklyReportData.footerInfo;
+
+    // 生成统计卡片HTML
+    const statsHTML = Object.keys(stats).map(key => {
+        const stat = stats[key];
+        const cardClass = key; // prosperity, ranking, members, activities
+
+        // 根据不同类型生成不同的内容
+        let contentHTML = '';
+        if (stat.trend) {
+            contentHTML = `<div class="stat-trend">${stat.trend}</div>`;
+        } else if (stat.badge) {
+            contentHTML = `<div class="stat-badge">${stat.badge}</div>`;
+        }
+
+        return `
+            <div class="stat-card ${cardClass}">
+                <div class="stat-icon">${stat.icon}</div>
+                <div class="stat-content">
+                    <div class="stat-number">${stat.value}</div>
+                    <div class="stat-label">${stat.label}</div>
+                    ${contentHTML}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = `
+        <div class="footer-stats-grid">
+            ${statsHTML}
+        </div>
+        <div class="footer-info">
+            <div class="footer-timestamp">
+                <span class="timestamp-icon">🕐</span>
+                ${footerInfo.timestamp}
+            </div>
+            <div class="footer-version">
+                <span class="version-icon">📊</span>
+                ${footerInfo.version}
+            </div>
+        </div>
+    `;
+}
+
+// 渲染新加入成员
+function renderNewMembers() {
+    const container = document.getElementById('newMembersGrid');
+    if (!container || !weeklyReportData.newMembers) return;
+
+    container.innerHTML = '';
+
+    weeklyReportData.newMembers.forEach(member => {
+        const memberDiv = document.createElement('div');
+        memberDiv.className = 'new-member';
+
+        memberDiv.innerHTML = `
+            <img src="${member.avatar}" alt="${member.name}" loading="lazy">
+            <div class="new-member-name">${member.name}</div>
+        `;
+
+        container.appendChild(memberDiv);
+    });
+}
+
+// ==================== 百业周报页面初始化 ====================
+
+// 百业周报页面专用初始化函数
+function initializeWeeklyReportPage() {
+    console.log('百业周报页面开始初始化');
+    
+    // 应用配置
+    if (typeof applyConfig === 'function') {
+        applyConfig();
+    }
+    
+    // 初始化音乐播放器
+    if (typeof MusicPlayer === 'function') {
+        new MusicPlayer();
+    }
+    
+    // 绑定滚动事件
+    if (typeof handleNavbarScroll === 'function') {
+        window.addEventListener('scroll', handleNavbarScroll);
+    }
+    
+    // 初始化百业周报
+    initWeeklyReport();
+    
+    // 处理用户交互后的自动播放
+    document.addEventListener('click', () => {
+        const bgMusic = document.getElementById('backgroundAudio');
+        if (bgMusic && bgMusic.paused) {
+            bgMusic.play().catch(error => {
+                console.log("用户交互后播放失败:", error);
+            });
+        }
+    }, {once: true});
+    
+    console.log('百业周报页面初始化完成');
+}
+
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', initializeWeeklyReportPage);
+
+// 防止缩放功能
+window.addEventListener('keydown', function (event) {
+    if (event.ctrlKey && (event.keyCode === 107 || event.keyCode === 109 || event.keyCode === 187 || event.keyCode === 189)) {
+        event.preventDefault();
+    }
+});
+window.addEventListener('mousewheel', function (event) {
+    if (event.ctrlKey === true || event.metaKey) {
+        event.preventDefault();
+    }
+}, {passive: false});
+window.addEventListener('DOMMouseScroll', function (event) {
+    if (event.ctrlKey === true || event.metaKey) {
+        event.preventDefault();
+    }
+}, {passive: false});
+
+</script>
+
+<!-- 需要从 script.js 获取的通用功能 -->
+<script src="script.js"></script>
+
+
+<style>
+/* 百业周报页面特定样式 */
+.weekly-report-page-header {
+    padding: 120px 0 60px 0;
+    background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+    text-align: center;
+    color: white;
+}
+
+.weekly-report-page-header .section-header__title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #FFD700;
+}
+
+.weekly-report-page-header .section-header__subtitle {
+    font-size: 1.5rem;
+    color: #E2E8F0;
+}
+
+/* 确保导航栏中当前页面高亮 */
+.main-nav__link--active {
+    color: #FFD700 !important;
+    border-bottom: 2px solid #FFD700;
+}
+
+/* 在百业周报页面动态设置高亮 */
+body {
+    --current-page: 'weekly-report';
+}
+
+.main-nav__menu li:nth-child(4) .main-nav__link {
+    color: #FFD700 !important;
+    border-bottom: 2px solid #FFD700;
+}
+
+/* 调整百业周报区域的顶部边距 */
+.weekly-report-section {
+    padding-top: 0;
+}
+</style>
+
+</body>
+</html>

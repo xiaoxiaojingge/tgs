@@ -49,7 +49,7 @@
             <li><a href="#heroSection" class="main-nav__link">首页</a></li>
             <li><a href="#videoShowcase" class="main-nav__link">百业混剪</a></li>
             <li><a href="#organizationActivities" class="main-nav__link">百业活动</a></li>
-            <li><a href="#weeklyReport" class="main-nav__link">百业周报</a></li>
+            <li><a href="weekly-report.html" class="main-nav__link">百业周报</a></li>
             <li><a href="#characterGallery" class="main-nav__link">百业人员</a></li>
             <li><a href="#contactSection" class="main-nav__link">加入我们</a></li>
         </ul>
@@ -69,7 +69,7 @@
             <button class="btn btn--primary" onclick="scrollToSection('organizationActivities')">
                 探索百业活动
             </button>
-            <button class="btn btn--secondary" onclick="scrollToSection('weeklyReport')">
+            <button class="btn btn--secondary" onclick="window.location.href='weekly-report.html'">
                 阅读百业周报
             </button>
             <button class="btn btn--secondary" onclick="scrollToSection('characterGallery')">
@@ -187,92 +187,7 @@
     </div>
 </section>
 
-<!-- 百业周报区域标题 -->
-<div id="weeklyReportHeaderTitle" class="section-spacer">
-    <div class="section-header">
-        <h2 id="weeklyReportTitle" class="section-header__title">百业周报</h2>
-        <p id="weeklyReportSubtitle" class="section-header__subtitle">江湖风云，一览无余</p>
-    </div>
-</div>
 
-<!-- 百业周报区域 -->
-<section id="weeklyReport" class="weekly-report-section">
-    <div class="weekly-report-container">
-        <!-- 开封高级会所 -->
-        <div class="weekly-report-header" id="weeklyReportHeader">
-            <!-- 周报头部信息将通过JavaScript动态生成 -->
-        </div>
-
-        <!-- 主要内容区域 -->
-        <div class="weekly-report-content">
-            <!-- 左侧列：活跃分子 -->
-            <div class="weekly-report-left-column">
-                <div class="active-members-section">
-                    <h4 class="section-title">好厉害的活跃分子</h4>
-                    <div class="members-ranking" id="activeMembersRanking">
-                        <!-- 活跃成员排行榜将通过JavaScript动态生成 -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- 中间列：恋与首领 TOP5 -->
-            <div class="weekly-report-center-column">
-                <div class="love-music-section">
-                    <h4 class="section-title">恋与首领 · TOP5</h4>
-                    <div class="love-music-leaders" id="loveMusicLeaders">
-                        <!-- 两个首领的TOP5记录将通过JavaScript动态生成 -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- 右侧列：百业侠境MVP榜 -->
-            <div class="weekly-report-right-column">
-                <div class="mvp-section">
-                    <h4 class="section-title">百业侠境MVP榜</h4>
-                    <div class="mvp-leaders" id="mvpLeaders">
-                        <!-- 两个Boss的MVP记录将通过JavaScript动态生成 -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 下方内容区域 -->
-        <div class="weekly-report-bottom">
-            <!-- 上周纂要 -->
-            <div class="weekly-summary" id="weeklySummary">
-                <!-- 上周纂要内容将通过JavaScript动态生成 -->
-            </div>
-
-            <!-- 百业战·百业栋梁 -->
-            <div class="battle-section">
-                <h4 class="section-title">百业战 · 百业栋梁</h4>
-                <div class="battle-records" id="battleRecords">
-                    <!-- 战绩记录将通过JavaScript动态生成 -->
-                </div>
-                <div class="battle-members" id="battleMembers">
-                    <!-- 战斗成员头像将通过JavaScript动态生成 -->
-                </div>
-            </div>
-
-        </div>
-
-        <!-- 底部信息 -->
-        <div class="weekly-report-footer" id="weeklyReportFooter">
-            <!-- 底部统计信息将通过JavaScript动态生成 -->
-        </div>
-
-        <!-- 来人，来！ -->
-        <div class="recruitment-section">
-            <h4 class="section-title">来人，来！</h4>
-            <div class="recruitment-content">
-                <div class="recruitment-highlight">热烈欢迎新加入成员</div>
-                <div class="new-members-grid" id="newMembersGrid">
-                    <!-- 新成员头像网格将通过JavaScript动态生成 -->
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- 百业人员区域标题 -->
 <div id="characterGalleryHeader" class="section-spacer">
