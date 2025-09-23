@@ -88,6 +88,8 @@ function applyConfig() {
         // 设置首页背景媒体（支持视频和图片）
         const heroSection = document.getElementById('heroSection');
         if (heroSection && typeof MediaUtils !== 'undefined') {
+            const isMobile = MediaUtils.isMobileDevice();
+            console.log(`设备类型检测: ${isMobile ? '移动设备' : '桌面设备'}, 窗口宽度: ${window.innerWidth}px`);
             MediaUtils.initSectionBackground('#heroSection', CONFIG.hero.background);
             console.log('首页背景媒体已初始化');
         } else if (heroSection) {
@@ -97,18 +99,23 @@ function applyConfig() {
 
         // 设置背景媒体（支持视频和图片）
         if (typeof MediaUtils !== 'undefined') {
+            const isMobile = MediaUtils.isMobileDevice();
+            
             // 初始化演示区域背景媒体
+            console.log(`百业混剪区域 - 设备类型: ${isMobile ? '移动设备' : '桌面设备'}`);
+            console.log(`百业混剪背景配置:`, CONFIG.videoShowcase.background);
             MediaUtils.initSectionBackground('#videoShowcase', CONFIG.videoShowcase.background);
             console.log('演示区域背景媒体已初始化');
-            // MediaUtils.initSectionBackground('#weeklyReport', CONFIG.videoShowcase.background);
+            
             // 初始化组织活动区域背景媒体
+            console.log(`百业活动区域 - 设备类型: ${isMobile ? '移动设备' : '桌面设备'}`);
+            console.log(`百业活动背景配置:`, CONFIG.organizationActivities.background);
             MediaUtils.initSectionBackground('#organizationActivities', CONFIG.organizationActivities.background);
             console.log('组织活动区域背景媒体已初始化');
         } else {
             console.warn('MediaUtils 未加载，使用传统方式设置背景');
             // 传统方式兼容处理
             setTraditionalBackground('#videoShowcase', CONFIG.videoShowcase.background);
-            // setTraditionalBackground('#weeklyReport', CONFIG.videoShowcase.background);
             setTraditionalBackground('#organizationActivities', CONFIG.organizationActivities.background);
         }
 

@@ -44,6 +44,7 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
         // 首页背景
         background: { // 首页背景媒体配置对象
             url: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/background/background1.avif", // 背景媒体文件URL地址
+            mobileUrl: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1758630058428_qdqqd_94v4mv.jpg", // 手机端背景媒体文件URL地址
             type: "auto", // 媒体类型检测方式（auto自动检测/video视频/image图片）
             fallback: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/background/background1.avif" // 备用图片地址（当主媒体加载失败时使用）
         },
@@ -88,6 +89,7 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
         background: { // 视频区域背景媒体配置
             url: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1757106279712_qdqqd_lf6cky.mp4", // 背景媒体文件URL地址
             type: "auto", // 媒体类型检测方式（auto自动检测/video视频/image图片）
+            mobileUrl: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1758630058428_qdqqd_94v4mv.jpg", // 手机端背景媒体文件URL地址
             fallback: "https://www.yysls.cn/pc/gw/20220815175950/img/mhys/bz/17_33f9186.jpg?image_process=format,jpg" // 备用图片地址（当主媒体加载失败时使用）
         },
         // 遮罩层配置
@@ -112,6 +114,7 @@ const CONFIG = { // 主配置对象，包含网站所有配置项
         // 背景媒体配置
         background: { // 活动区域背景媒体配置
             url: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1757106279712_qdqqd_lf6cky.mp4", // 背景视频文件URL地址
+            mobileUrl: "https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1758630058428_qdqqd_94v4mv.jpg", // 手机端背景媒体文件URL地址
             type: "auto", // 媒体类型检测方式（auto自动检测/video视频/image图片）
             fallback: "https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/background/background1.avif" // 备用图片地址（当主媒体加载失败时使用）
         },
@@ -310,6 +313,11 @@ const MediaUtils = {
         return 'unknown';
     },
 
+    // 检测是否为移动设备
+    isMobileDevice() {
+        return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    },
+
     getBackgroundMediaConfig(backgroundConfig) {
         const getDefaultFallback = () => {
             return 'https://gitee.com/xiaojinggege/BaiYeFengHuaLu/raw/Vue/Static/background/background1.avif';
@@ -325,14 +333,21 @@ const MediaUtils = {
         }
 
         if (typeof backgroundConfig === 'object' && backgroundConfig.url) {
+            // 检测是否为移动设备，如果是且有mobileUrl，则使用mobileUrl
+            const isMobile = this.isMobileDevice();
+            const selectedUrl = isMobile && backgroundConfig.mobileUrl ? backgroundConfig.mobileUrl : backgroundConfig.url;
+            
             const actualType = backgroundConfig.type === 'auto'
-                ? this.detectMediaType(backgroundConfig.url)
+                ? this.detectMediaType(selectedUrl)
                 : backgroundConfig.type;
 
             return {
-                url: backgroundConfig.url,
+                url: selectedUrl,
                 type: actualType,
-                fallback: backgroundConfig.fallback || getDefaultFallback()
+                fallback: backgroundConfig.fallback || getDefaultFallback(),
+                isMobile: isMobile,
+                originalUrl: backgroundConfig.url,
+                mobileUrl: backgroundConfig.mobileUrl
             };
         }
 
@@ -400,6 +415,82 @@ const MediaUtils = {
         if (mediaElement) {
             element.appendChild(mediaElement);
         }
+
+        // 存储配置以便后续响应式切换使用
+        if (!element.mediaConfigCache) {
+            element.mediaConfigCache = mediaConfig;
+        }
+
+        // 添加窗口大小变化监听器，实现响应式背景切换
+        if (!element.hasResizeListener) {
+            let resizeTimeout;
+            const handleResize = () => {
+                // 使用防抖机制，避免频繁切换
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    this.updateBackgroundForDevice(selector, mediaConfig);
+                }, 300); // 300ms 防抖延迟
+            };
+            
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('orientationchange', handleResize);
+            element.hasResizeListener = true;
+            
+            console.log(`已为 ${selector} 添加响应式背景切换监听器`);
+        }
+    },
+
+    // 根据设备类型更新背景
+    updateBackgroundForDevice(selector, mediaConfig) {
+        const element = document.querySelector(selector);
+        if (!element) return;
+
+        // 获取当前配置
+        const config = this.getBackgroundMediaConfig(mediaConfig);
+        const currentBgImage = element.style.backgroundImage;
+        const currentVideoSrc = element.querySelector('video')?.src;
+
+        // 检查是否需要切换
+        const needsUpdate = this.shouldUpdateBackground(element, config, currentBgImage, currentVideoSrc);
+        
+        if (needsUpdate) {
+            console.log(`检测到设备类型变化，更新 ${selector} 的背景`);
+            
+            // 清除现有的媒体元素
+            const existingVideo = element.querySelector('video');
+            if (existingVideo) {
+                existingVideo.remove();
+            }
+            
+            // 清除背景图片
+            element.style.backgroundImage = '';
+            
+            // 重新创建背景媒体
+            const mediaElement = this.createBackgroundMediaElement(mediaConfig, element);
+            if (mediaElement) {
+                element.appendChild(mediaElement);
+            }
+        }
+    },
+
+    // 检查是否需要更新背景
+    shouldUpdateBackground(element, config, currentBgImage, currentVideoSrc) {
+        if (config.type === 'video' && currentVideoSrc) {
+            // 如果当前是视频，检查视频源是否需要更新
+            return !currentVideoSrc.includes(config.url);
+        } else if (config.type === 'image' && currentBgImage) {
+            // 如果当前是图片，检查背景图片是否需要更新
+            return !currentBgImage.includes(config.url);
+        }
+        
+        // 如果媒体类型发生变化，也需要更新
+        const hasVideo = !!element.querySelector('video');
+        const hasBackground = !!element.style.backgroundImage;
+        
+        if (config.type === 'video' && !hasVideo) return true;
+        if (config.type === 'image' && !hasBackground) return true;
+        
+        return false;
     }
 };
 
