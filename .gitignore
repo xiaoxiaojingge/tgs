@@ -7,7 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+tgs-admin-backend
+tgs-admin-frontend
+.tasks
 tgs-vue3/*
+docs/*
 node_modules
 dist
 dist-ssr
