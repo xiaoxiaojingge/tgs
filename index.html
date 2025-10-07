@@ -175,6 +175,28 @@
         0%, 100% { opacity: 0.6; }
         50% { opacity: 1; }
       }
+      
+      /* Plyr 播放器关键样式 - 防止CSS未加载时尺寸失控 */
+      .plyr,
+      #plyrPlayer {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 675px !important; /* 1200px * 9/16 = 675px */
+        aspect-ratio: 16 / 9;
+      }
+      
+      .plyr__video-wrapper {
+        width: 100% !important;
+        aspect-ratio: 16 / 9;
+      }
+      
+      .video-section__video {
+        width: 100%;
+        max-width: 1200px;
+        aspect-ratio: 16 / 9;
+        min-height: 400px;
+      }
     </style>
     <script type="module" crossorigin src="/assets/index-BfErFLUB.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/vendor-Czv42QQC.js">
